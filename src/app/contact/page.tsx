@@ -335,7 +335,7 @@ export default function ContactPage() {
                   Prefer to chat in person? Book a 30-minute call to discuss your project.
                 </p>
                 <motion.a
-                  href=" " //TODO: Add calendly link
+                  href=" " // TODO: Add calendly link once created
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
