@@ -1,25 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { experience, personalInfo } from '@/lib/personal-info';
+import { projects } from '@/lib/projects';
+import { researchPapers } from '@/lib/research';
 
 export async function POST(request: NextRequest) {
   try {
     const { message } = await request.json();
 
-    if (!message) {
+    if (typeof message !== 'string' || !message.trim()) {
       return NextResponse.json(
         { error: 'Message is required' },
         { status: 400 }
       );
     }
 
-    // For now, we'll return a simple response based on keywords
-    // In the future, this can be connected to OpenAI, Claude, or other AI services
-    const response = generateNovaResponse(message);
+    const response = generateNovaResponse(message.trim());
 
     return NextResponse.json({
       message: response,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-
   } catch (error) {
     console.error('AI API Error:', error);
     return NextResponse.json(
@@ -31,36 +31,88 @@ export async function POST(request: NextRequest) {
 
 function generateNovaResponse(message: string): string {
   const lowerMessage = message.toLowerCase();
+  const currentRole = experience[0];
+  const featuredProjects = projects
+    .filter((project) => project.featured)
+    .slice(0, 3)
+    .map((project) => project.title);
+  const publishedResearchCount = researchPapers.filter(
+    (paper) => paper.status === 'Published'
+  ).length;
+  const researchAreas = Array.from(
+    new Set(researchPapers.flatMap((paper) => paper.tags))
+  ).slice(0, 4);
+  const coreSkills = personalInfo.skills.core.slice(0, 4);
 
-  // Keywords and responses
-  if (lowerMessage.includes('project') || lowerMessage.includes('work')) {
-    return "Kenny has worked on numerous exciting projects! From AI-powered applications to blockchain solutions and research in machine learning. Some highlights include his work in artificial intelligence, full-stack development, and innovative research papers. Would you like to know about any specific project or technology?";
+  if (
+    lowerMessage.includes('experience') ||
+    lowerMessage.includes('background') ||
+    lowerMessage.includes('intern') ||
+    lowerMessage.includes('role')
+  ) {
+    return `Kenny currently works as a ${currentRole.title} at ${currentRole.company}. The portfolio also highlights independent project and research work spanning machine learning, data analysis, and software engineering.`;
   }
-  
-  if (lowerMessage.includes('research') || lowerMessage.includes('paper') || lowerMessage.includes('academic')) {
-    return "Kenny is actively involved in research, particularly in AI and machine learning. He has published several papers and contributes to the advancement of the field. His research focuses on practical applications of AI technology and innovative approaches to complex problems. Is there a specific research area you're interested in?";
+
+  if (
+    lowerMessage.includes('project') ||
+    lowerMessage.includes('portfolio') ||
+    lowerMessage.includes('build')
+  ) {
+    return `The portfolio currently highlights ${projects.length} projects. Featured work includes ${formatList(featuredProjects)}. I can also tell you more about a specific project area if you want.`;
   }
-  
-  if (lowerMessage.includes('skill') || lowerMessage.includes('technology') || lowerMessage.includes('tech')) {
-    return "Kenny is proficient in a wide range of technologies including AI/ML, React, Next.js, Python, TypeScript, cloud computing, and blockchain. He specializes in full-stack development with a focus on cutting-edge technologies and research. What specific technology would you like to know more about?";
+
+  if (
+    lowerMessage.includes('research') ||
+    lowerMessage.includes('paper') ||
+    lowerMessage.includes('academic') ||
+    lowerMessage.includes('publication')
+  ) {
+    return `The site lists ${researchPapers.length} research entries, including ${publishedResearchCount} marked as published. Current themes include ${formatList(researchAreas)}. If you want, ask about one of the papers or research directions.`;
   }
-  
-  if (lowerMessage.includes('contact') || lowerMessage.includes('hire') || lowerMessage.includes('work with')) {
-    return "Kenny is always interested in exciting opportunities! You can reach out to him through the contact page on this website. He's particularly interested in AI projects, innovative startups, research collaborations, and consulting opportunities. Would you like me to guide you to his contact information?";
+
+  if (
+    lowerMessage.includes('skill') ||
+    lowerMessage.includes('technology') ||
+    lowerMessage.includes('tech')
+  ) {
+    return `Kenny's core focus areas include ${formatList(coreSkills)}. The broader portfolio leans into AI systems, full-stack development, data analysis, and research-driven experimentation.`;
   }
-  
-  if (lowerMessage.includes('experience') || lowerMessage.includes('background')) {
-    return "Kenny has 5+ years of experience in software development and AI research. He's built 20+ projects, published research papers, and contributed to numerous open-source initiatives. His background spans from full-stack development to cutting-edge AI research and blockchain technology.";
+
+  if (
+    lowerMessage.includes('contact') ||
+    lowerMessage.includes('hire') ||
+    lowerMessage.includes('work with')
+  ) {
+    return `The best way to reach Kenny is by email at ${personalInfo.email}. You can also use the LinkedIn link in the left rail if you prefer a professional intro there.`;
   }
-  
-  if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-    return "Hello! Great to meet you! I'm Nova, Kenny's AI assistant. I'm here to help you learn more about Kenny's work, projects, and expertise. Feel free to ask me anything about his background, skills, research, or projects!";
+
+  if (
+    lowerMessage.includes('hello') ||
+    lowerMessage.includes('hi') ||
+    lowerMessage.includes('hey')
+  ) {
+    return "Hello. I'm Nova, Kenny's portfolio assistant. I can help you navigate the site's projects, research, experience, and contact details.";
   }
-  
+
   if (lowerMessage.includes('nova') || lowerMessage.includes('who are you')) {
-    return "I'm Nova, Kenny's AI assistant! I'm designed to help visitors learn more about Kenny's work and expertise. Think of me as your guide to understanding his projects, research, and capabilities. I can answer questions about his background, skills, and various endeavors. What would you like to know?";
+    return "I'm Nova, the on-site assistant for Kenny's portfolio. My role is simple: help visitors quickly find the relevant context about his work, research, and background.";
   }
 
-  // Default response
-  return "That's an interesting question! While I'm still learning and growing, I can help you discover more about Kenny's work in AI, software development, and research. Feel free to ask me about his projects, skills, experience, or how to get in touch with him. What specific aspect of Kenny's work interests you most?";
+  return "I can help with Kenny's projects, research, experience, skills, or contact details. Ask about one of those areas and I'll answer from the portfolio content.";
+}
+
+function formatList(items: string[]): string {
+  if (items.length === 0) {
+    return 'the current portfolio entries';
+  }
+
+  if (items.length === 1) {
+    return items[0];
+  }
+
+  if (items.length === 2) {
+    return `${items[0]} and ${items[1]}`;
+  }
+
+  return `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`;
 }
