@@ -98,7 +98,8 @@ export class VoiceHandler {
       }
 
       utterance.onend = () => resolve();
-      utterance.onerror = (event: any) => reject(new Error(`Speech synthesis error: ${event.error}`));
+      utterance.onerror = (event: SpeechSynthesisErrorEvent) =>
+        reject(new Error(`Speech synthesis error: ${event.error}`));
 
       this.synthesis.speak(utterance);
     });

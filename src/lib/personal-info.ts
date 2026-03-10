@@ -3,12 +3,16 @@
 // ================================
 // Update this file with your personal information to customize the entire website
 
+const siteUrl = 'https://kennethegan.com';
+const resumeUrl: string | null = null;
+
 export const personalInfo = {
   // Basic Information
   name: "Kenny Egan",
   title: "AI Researcher & Software Engineer",
   bio: "SDE Intern at Capital Technology Group, passionate about building innovative AI solutions, data analysis, and full-stack development. Currently pursuing excellence in machine learning and creating impactful technology products.",
   location: "United States",
+  siteUrl,
   
   // Contact Information
   email: "kenegan2005@gmail.com",
@@ -18,7 +22,7 @@ export const personalInfo = {
     github: "https://github.com/kennyegan",
     linkedin: "https://www.linkedin.com/in/kenneth-egan2005/",
     twitter: "https://twitter.com/kennyegan", // Update if you have one
-    website: "https://kenny-egan.dev",
+    website: siteUrl,
     scholar: "https://scholar.google.com/citations?user=kenny-egan", // Update if you have one
     calendly: "https://calendly.com/kenny-egan/30min" // Update if you have one
   },
@@ -77,7 +81,7 @@ export const personalInfo = {
 
   // Resume Information
   resume: {
-    pdf_filename: "Kenny-Egan-Resume.pdf", // File should be in /public/resume/
+    url: resumeUrl,
     last_updated: "December 2024"
   }
 };
