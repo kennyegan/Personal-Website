@@ -59,7 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-[#0a192f] text-[#8892b0] antialiased`}
+        className={`${inter.className} relative min-h-screen bg-background text-text-secondary antialiased`}
       >
         <div className="min-h-screen">{children}</div>
       </body>
