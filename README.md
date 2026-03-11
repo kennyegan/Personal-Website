@@ -1,183 +1,89 @@
-# Kenny Egan - Personal Portfolio Website
+# Kenny Egan Personal Website
 
-A personlized and clean personal portfolio website built with **Next.js 14** (App Router), **TypeScript**, **Tailwind CSS**, and **Framer Motion**.
+Single-page portfolio built with Next.js 14, TypeScript, and Tailwind CSS.
 
-## Features
+## Overview
 
-- **Modern Design**: Futuristic glassmorphism UI with neon blue, cyber purple, and electric green color scheme
-- **Responsive**: Fully responsive design optimized for all device sizes
-- **Performance**: Fast loading with Next.js 14 App Router and optimized components  
-- **Animations**: Smooth transitions and hover effects powered by Framer Motion
-- **TypeScript**: Fully typed for better development experience and code quality
-- **Dark Theme**: Beautiful dark mode design by default
+The current app is a split-layout, single-page portfolio:
+- Sticky left rail with identity, in-page navigation, social links, and the Nova orb
+- Scrollable right column with About, Experience, Projects, Research, Updates, and Contact sections
+- Lightweight `POST /api/ai` endpoint that powers Nova's portfolio-aware chat responses
+
+## Stack
+
+- Next.js 14 App Router
+- React 18
+- TypeScript with strict mode
+- Tailwind CSS
+- Lucide React
+
+## Scripts
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
 
 ## Project Structure
 
-```
-Personal-Website/
-├── src/
-│   ├── app/                 # Next.js App Router pages
-│   │   ├── page.tsx         # Home page
-│   │   ├── projects/        # Projects showcase
-│   │   ├── research/        # Research publications
-│   │   ├── resume/          # Resume page
-│   │   ├── contact/         # Contact form
-│   │   └── layout.tsx       # Root layout
-│   ├── components/          # Reusable UI components
-│   │   ├── Navbar.tsx       # Navigation component
-│   │   ├── Footer.tsx       # Footer component
-│   │   ├── ProjectCard.tsx  # Project display card
-│   │   ├── ResearchCard.tsx # Research paper card
-│   │   └── ResumeButton.tsx # Resume download button
-│   ├── lib/                 # Data and utilities
-│   │   ├── projects.ts      # Projects data
-│   │   └── research.ts      # Research papers data
-│   └── styles/
-│       └── globals.css      # Global styles and Tailwind config
-├── public/
-│   └── images/              # Static images and assets
-└── package.json
+```text
+src/
+  app/
+    api/ai/route.ts      Nova chat endpoint
+    layout.tsx           Root metadata and shell
+    page.tsx             Single-page portfolio entrypoint
+  components/
+    LeftPanel.tsx        Sticky identity rail
+    NovaChat.tsx         Nova orb and modal chat UI
+    sections/            About, Experience, Projects, Research, Updates, Contact
+  lib/
+    personal-info.ts     Profile, site URL, resume setting, experience data
+    projects.ts          Project data
+    research.ts          Research data
+    updates.ts           Recent update timeline
+    voice.ts             Browser speech helper for Nova
+  styles/
+    globals.css          Global styles and Nova visual treatment
+  types/
+    speech.d.ts          Web Speech API typings
 ```
 
-## Tech Stack
+## Content Sources
 
-- **Framework**: Next.js 14 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS with custom futuristic theme
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Font**: Inter (Google Fonts)
+Most of the site content is data-driven:
+- `src/lib/personal-info.ts`
+- `src/lib/projects.ts`
+- `src/lib/research.ts`
+- `src/lib/updates.ts`
 
-## Design Features
+When an asset does not exist yet, leave the corresponding URL unset instead of linking to a missing file.
 
-- **Glassmorphism**: Subtle glass-like cards with backdrop blur
-- **Gradient Effects**: Beautiful color gradients and text effects  
-- **Hover Animations**: Interactive elements with smooth transitions
-- **Responsive Grid**: Adaptive layouts for all screen sizes
-- **Custom Scrollbar**: Styled scrollbars to match the theme
-- **Loading States**: Smooth loading animations and states
+## Optional Assets
 
-## Getting Started
+These are intentionally optional in the current repo state:
+- Resume PDF: controlled by `personalInfo.resume.url`
+- Research PDF links: controlled per entry in `src/lib/research.ts`
+- Open Graph image: not configured until a real asset exists
 
-### Prerequisites
+## Nova
 
-- Node.js 18+ 
-- npm or yarn
+Nova is an intentionally expressive part of the design, distinct from the otherwise restrained portfolio UI.
+- Orb trigger lives in the left rail on large screens
+- Modal chat posts to `/api/ai`
+- Voice input uses the browser Web Speech API when available
+- Responses should stay grounded in repo content, not hardcoded marketing claims
 
-### Installation
+## Local Workflow
 
-1. Clone the repository:
-```bash
-git clone https://github.com/your-username/kenny-portfolio.git
-cd kenny-portfolio
-```
+1. Install dependencies with `npm install`
+2. Run `npm run dev`
+3. Update content in the `src/lib/*` files
+4. Verify changes with `npm run lint` and `npm run build`
 
-2. Install dependencies:
-```bash
-npm install
-```
+## Deployment Notes
 
-3. Start the development server:
-```bash
-npm run dev
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Build for Production
-
-```bash
-npm run build
-npm start
-```
-
-## 📖 Sections
-
-### Home
-- Hero section with animated profile
-- Quick stats and skills overview
-- Featured projects and research
-- Call-to-action sections
-
-### Projects
-- Filterable project showcase
-- Search functionality
-- Category-based filtering
-- Detailed project cards with tech stacks
-
-### Research
-- Academic publications
-- Filterable by status and research area
-- Citation counts and links
-- Research collaboration information
-
-### Resume
-- Professional experience timeline
-- Education background
-- Technical skills breakdown
-- Awards and recognition
-- Downloadable PDF resume
-
-### Contact
-- Contact form with validation
-- Multiple contact methods
-- Collaboration types
-- FAQ section
-
-## Customization
-
-### Colors
-Update the color scheme in `tailwind.config.js`:
-```javascript
-colors: {
-  'neon-blue': { /* ... */ },
-  'cyber-purple': { /* ... */ },
-  'electric-green': { /* ... */ }
-}
-```
-
-### Content
-- Update projects in `src/lib/projects.ts`
-- Update research papers in `src/lib/research.ts`
-- Replace placeholder images in `public/images/`
-
-### Fonts
-Change fonts in `src/app/layout.tsx` and `tailwind.config.js`
-
-## Responsive Design
-
-The website is fully responsive with breakpoints:
-- Mobile: < 768px
-- Tablet: 768px - 1024px  
-- Desktop: > 1024px
-
-## Performance Optimizations
-
-- Next.js 14 App Router for optimal performance
-- Image optimization with next/image
-- Dynamic imports for code splitting
-- Framer Motion with reduced motion support
-- Optimized fonts and assets
-
-## Development
-
-### Scripts
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-
-### Environment Variables
-`.env` 
-```
-#when domain is purchased this will be updated
-PUBLIC_SITE_URL=https://your-domain.com 
-```
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-
----
-
+- Canonical site URL is `https://kennethegan.com`
+- Metadata is defined in `src/app/layout.tsx`
+- The app currently has no required environment variables
