@@ -83,6 +83,11 @@ export const personalInfo = {
   resume: {
     url: resumeUrl,
     last_updated: "December 2024"
+  },
+
+  // Frontend feature flags
+  ui: {
+    showNovaAssistant: false,
   }
 };
 
