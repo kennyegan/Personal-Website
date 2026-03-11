@@ -1,4 +1,6 @@
-# Nova AI Supernova - Development Changelog
+# Nova AI Supernova - Historical Development Changelog
+
+> Historical context only. This document captures the December 2024 Nova build-out and should not be used as the current source of truth for repo architecture or design rules. Use `README.md` and `CLAUDE.md` for the live project state.
 
 > **Project**: Personal Website - Nova AI Assistant Integration  
 > **Developer**: Kenny Egan  
@@ -277,3 +279,28 @@ The result is a unique, memorable, and highly functional AI assistant that perfe
 
 
 **Status**: ✅ Complete and Ready for Production
+
+---
+
+## v2.0 - Minimal Redesign (March 2026)
+
+### Overview
+Complete site redesign from multi-page futuristic portfolio to minimal single-page research portfolio inspired by brittanychiang.com.
+
+### Nova AI Changes
+- Removed supernova visual animation and heavy effects
+- Redesigned as floating chat button (bottom-right corner) with clean slide-up panel
+- Kept keyword-based AI backend (`/api/ai`) and voice input via Web Speech API
+- Lazy-loaded VoiceHandler to prevent SSR issues
+- Clean message bubbles: accent-tinted user messages, navy-800 assistant messages
+- Minimal header with "Nova" label and close button
+
+### Site-Wide Changes
+- Converted from multi-page to single-page split layout (fixed left panel + scrollable right content)
+- Replaced neon/glassmorphism theme with minimal navy/slate/accent palette
+- Added Updates section for reverse-chronological personal news
+- Removed Navbar, Footer, and all decorative components
+- Scroll-based navigation highlighting via IntersectionObserver
+- Fixed "Kenny Chen" → "Kenny Egan" name inconsistency
+
+**Status**: ✅ Complete
