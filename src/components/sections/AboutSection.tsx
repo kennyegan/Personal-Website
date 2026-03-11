@@ -8,7 +8,7 @@ export default function AboutSection() {
         <span className="h-px flex-1 bg-gradient-to-r from-border/80 to-transparent" />
       </div>
 
-      <div className="rounded-[32px] border border-border/70 bg-surface/35 px-6 py-7 shadow-[0_30px_90px_rgba(2,8,23,0.16)] backdrop-blur-xl sm:px-8">
+      <div className="rounded-[32px] border border-border/75 bg-surface/42 px-6 py-7 shadow-[0_30px_90px_rgba(2,8,23,0.22)] backdrop-blur-xl sm:px-8">
         <div className="space-y-5 text-base leading-7 text-text-secondary">
           <p className="text-[1.05rem] leading-8 text-text-primary/92">
             I&apos;m a software engineer and AI researcher focused on building

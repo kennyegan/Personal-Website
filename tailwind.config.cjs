@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const colorVar = (name) => `rgb(var(${name}) / <alpha-value>)`;
+
 const config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -11,18 +13,15 @@ const config = {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
-        navy: {
-          700: '#1d3461',
-          800: '#112240',
-          900: '#0a192f',
-        },
-        slate: {
-          100: '#e6f1ff',
-          200: '#ccd6f6',
-          300: '#a8b2d1',
-          400: '#8892b0',
-        },
-        accent: '#64ffda',
+        background: colorVar('--color-background'),
+        surface: colorVar('--color-surface'),
+        'surface-strong': colorVar('--color-surface-strong'),
+        'text-primary': colorVar('--color-text-primary'),
+        'text-secondary': colorVar('--color-text-secondary'),
+        border: colorVar('--color-border'),
+        'accent-cyan': colorVar('--color-accent-cyan'),
+        'accent-violet': colorVar('--color-accent-violet'),
+        mint: colorVar('--color-mint'),
       },
     },
   },

@@ -14,7 +14,7 @@ export default function UpdatesSection() {
         {updates.map((group) => (
           <div
             key={group.year}
-            className="rounded-[32px] border border-border/70 bg-surface/35 p-6 shadow-[0_26px_80px_rgba(2,8,23,0.14)] backdrop-blur-xl"
+            className="rounded-[32px] border border-border/75 bg-surface/42 p-6 shadow-[0_26px_80px_rgba(2,8,23,0.2)] backdrop-blur-xl"
           >
             <div className="mb-5 flex items-center gap-4">
               <h3 className="text-lg font-semibold text-accent-cyan">

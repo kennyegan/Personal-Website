@@ -14,7 +14,7 @@ export default function ExperienceSection() {
         {experience.map((role, i) => (
           <div
             key={i}
-            className="group relative -mx-4 rounded-[30px] border border-border/60 bg-surface/22 p-5 shadow-[0_20px_55px_rgba(2,8,23,0.12)] backdrop-blur-xl transition-all duration-300 hover:border-accent-cyan/18 hover:bg-surface/48 hover:shadow-[0_30px_80px_rgba(2,8,23,0.18)] sm:grid sm:grid-cols-8 sm:gap-8"
+            className="group relative -mx-4 rounded-[30px] border border-border/70 bg-surface/28 p-5 shadow-[0_20px_55px_rgba(2,8,23,0.18)] backdrop-blur-xl transition-all duration-300 hover:border-accent-cyan/20 hover:bg-surface/54 hover:shadow-[0_30px_80px_rgba(2,8,23,0.24)] sm:grid sm:grid-cols-8 sm:gap-8"
           >
             <div className="mb-3 mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary/90 sm:col-span-2">
               {role.duration}

@@ -1,102 +1,165 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
-function OrbitalMarker({ animated }: { animated: boolean }) {
-  return (
-    <div
-      className={`space-orbit__marker ${animated ? 'space-orbit__marker--counter' : ''}`}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 92 28" className="h-6 w-[4.8rem] sm:h-7 sm:w-[5.5rem]" fill="none">
-        <defs>
-          <linearGradient id="orbital-trail" x1="0" y1="14" x2="92" y2="14" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="rgb(var(--color-accent-cyan) / 0)" />
-            <stop offset="42%" stopColor="rgb(var(--color-accent-cyan) / 0.22)" />
-            <stop offset="100%" stopColor="rgb(var(--color-accent-violet) / 0.08)" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M4 14H32"
-          stroke="url(#orbital-trail)"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        />
-        <path
-          d="M54 14H82"
-          stroke="rgb(var(--color-accent-violet) / 0.26)"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeDasharray="3.5 6"
-        />
-        <path
-          d="M43 8.5L48.5 14L43 19.5L37.5 14L43 8.5Z"
-          fill="rgb(var(--color-text-primary))"
-          fillOpacity="0.96"
-        />
-        <circle
-          cx="43"
-          cy="14"
-          r="8"
-          stroke="rgb(var(--color-accent-cyan) / 0.24)"
-          strokeWidth="1"
-        />
-        <circle
-          className={`space-orbit__beacon ${animated ? 'space-orbit__beacon--pulse' : ''}`}
-          cx="43"
-          cy="14"
-          r="1.9"
-          fill="rgb(var(--color-accent-cyan))"
-        />
-        <circle
-          cx="83.5"
-          cy="14"
-          r="1.2"
-          fill="rgb(var(--color-text-primary) / 0.72)"
-        />
-      </svg>
-    </div>
-  );
+// Seeded random for deterministic star placement (no layout shift between renders)
+function seededRandom(seed: number) {
+  let s = seed;
+  return () => {
+    s = (s * 16807 + 0) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+interface Star {
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+}
+
+interface TwinklingStar extends Star {
+  delay: number;
+  duration: number;
+}
+
+function generateDistantStars(count: number, seed: number): Star[] {
+  const rand = seededRandom(seed);
+  const stars: Star[] = [];
+  for (let i = 0; i < count; i++) {
+    stars.push({
+      x: rand() * 100,
+      y: rand() * 100,
+      size: 0.5 + rand() * 1, // 0.5px – 1.5px
+      opacity: 0.15 + rand() * 0.15, // 0.15 – 0.30
+    });
+  }
+  return stars;
+}
+
+function generateTwinklingStars(count: number, seed: number): TwinklingStar[] {
+  const rand = seededRandom(seed);
+  const stars: TwinklingStar[] = [];
+  for (let i = 0; i < count; i++) {
+    stars.push({
+      x: rand() * 100,
+      y: rand() * 100,
+      size: 1 + rand() * 1, // 1px – 2px
+      opacity: 0.4 + rand() * 0.25, // 0.4 – 0.65
+      delay: rand() * 10, // 0 – 10s random delay
+      duration: 6 + rand() * 4, // 6 – 10s
+    });
+  }
+  return stars;
 }
 
 export default function SpaceEnvironment() {
-  const prefersReducedMotion = useReducedMotion();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [twinklingStars] = useState(() => generateTwinklingStars(65, 54321));
+
+  // Draw distant stars on canvas for performance (200-300 tiny dots)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, w, h);
+
+    const distantStars = generateDistantStars(280, 12345);
+    for (const star of distantStars) {
+      ctx.beginPath();
+      ctx.arc((star.x / 100) * w, (star.y / 100) * h, star.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+      ctx.fill();
+    }
+
+    const handleResize = () => {
+      const nw = window.innerWidth;
+      const nh = window.innerHeight;
+      const ndpr = window.devicePixelRatio || 1;
+      canvas.width = nw * ndpr;
+      canvas.height = nh * ndpr;
+      canvas.style.width = `${nw}px`;
+      canvas.style.height = `${nh}px`;
+
+      const nctx = canvas.getContext('2d');
+      if (!nctx) return;
+      nctx.scale(ndpr, ndpr);
+      nctx.clearRect(0, 0, nw, nh);
+
+      const stars = generateDistantStars(280, 12345);
+      for (const star of stars) {
+        nctx.beginPath();
+        nctx.arc((star.x / 100) * nw, (star.y / 100) * nh, star.size, 0, Math.PI * 2);
+        nctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+        nctx.fill();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
-    <motion.div
-      initial={prefersReducedMotion ? false : { opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.9, ease: 'easeOut' }}
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+    <div
+      className="pointer-events-none fixed inset-0 z-0"
       aria-hidden="true"
     >
-      <div className="space-environment absolute inset-0">
-        <div className="space-environment__base" />
-        <div className="space-environment__gradient" />
-        <div className="space-environment__nebula space-environment__nebula--violet" />
-        <div className="space-environment__nebula space-environment__nebula--cyan" />
-        <div className="space-stars space-stars--base" />
-        <div
-          className={`space-stars space-stars--twinkle-a ${prefersReducedMotion ? '' : 'space-stars--twinkle-a-animated'}`}
-        />
-        <div
-          className={`space-stars space-stars--twinkle-b ${prefersReducedMotion ? '' : 'space-stars--twinkle-b-animated'}`}
-        />
-        <div
-          className={`space-stars space-stars--drift ${prefersReducedMotion ? '' : 'space-stars--drift-animated'}`}
-        />
-        <div className="space-environment__vignette" />
+      {/* Layer 1: Deep space gradient */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(180deg, #02060D 0%, #040B16 100%)',
+        }}
+      />
 
-        <div className="space-orbit">
-          <div className="space-orbit__shell space-orbit__shell--outer" />
-          <div className="space-orbit__shell space-orbit__shell--inner" />
-          <div className={`space-orbit__track ${prefersReducedMotion ? '' : 'space-orbit__track--animated'}`}>
-            <div className="space-orbit__anchor">
-              <OrbitalMarker animated={!prefersReducedMotion} />
-            </div>
-          </div>
-        </div>
+      {/* Layer 2: Distant static stars (canvas) */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0"
+      />
+
+      {/* Layer 3: Foreground twinkling stars (DOM for CSS animation) */}
+      <div className="absolute inset-0">
+        {twinklingStars.map((star, i) => (
+          <span
+            key={i}
+            className="star-twinkle"
+            style={{
+              position: 'absolute',
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              borderRadius: '50%',
+              backgroundColor: `rgba(255, 255, 255, ${star.opacity})`,
+              animationDelay: `${star.delay}s`,
+              animationDuration: `${star.duration}s`,
+            }}
+          />
+        ))}
       </div>
-    </motion.div>
+
+      {/* Subtle vignette */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, transparent 50%, rgba(2, 6, 13, 0.4) 100%)',
+        }}
+      />
+    </div>
   );
 }

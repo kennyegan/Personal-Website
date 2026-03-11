@@ -11,6 +11,7 @@
     "tw:watch": "tailwindcss -i ./src/styles/globals.source.css -o ./src/styles/globals.css --config ./tailwind.config.cjs --watch"
   },
   "dependencies": {
+    "framer-motion": "^12.35.2",
     "lucide-react": "^0.292.0",
     "next": "14.0.0",
     "react": "^18",
