@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a192f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1d3461;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8892b0;
+}
+
+.nova-seal {
+  position: relative;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at 32% 30%,
+    rgba(255, 249, 240, 0.98) 0%,
+    rgba(236, 191, 127, 0.92) 25%,
+    rgba(180, 111, 68, 0.74) 58%,
+    rgba(92, 48, 36, 0.45) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 22px 48px rgba(2, 8, 23, 0.48),
+    0 0 36px rgba(194, 124, 79, 0.16);
+}
+
+.nova-seal::before,
+.nova-seal::after {
+  content: '';
+  position: absolute;
+  border-radius: 9999px;
+}
+
+.nova-seal::before {
+  inset: 18%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(255, 240, 214, 0.88) 52%,
+    rgba(255, 226, 185, 0.1) 100%
+  );
+  filter: blur(1px);
+}
+
+.nova-seal::after {
+  inset: -14%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0.75;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid #64ffda;
+  outline-offset: 2px;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
