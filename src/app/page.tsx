@@ -1,23 +1,15 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import LeftPanel from '@/components/LeftPanel';
+import NovaChat from '@/components/NovaChat';
+import { personalInfo } from '@/lib/personal-info';
 
 import AboutSection from '@/components/sections/AboutSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
-import ProjectsSection from '@/components/sections/ProjectsSection';
-import ResearchSection from '@/components/sections/ResearchSection';
 import UpdatesSection from '@/components/sections/UpdatesSection';
-import ContactSection from '@/components/sections/ContactSection';
 
-const sectionIds = [
-  'about',
-  'experience',
-  'projects',
-  'research',
-  'updates',
-  'contact',
-];
+const sectionIds = ['about', 'updates', 'experience'];
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('about');
@@ -42,40 +34,23 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const cards = (e.currentTarget as HTMLDivElement).querySelectorAll(
-      '.spotlight-card'
-    );
-    cards.forEach((card) => {
-      const rect = card.getBoundingClientRect();
-      (card as HTMLElement).style.setProperty(
-        '--mouse-x',
-        `${e.clientX - rect.left}px`
-      );
-      (card as HTMLElement).style.setProperty(
-        '--mouse-y',
-        `${e.clientY - rect.top}px`
-      );
-    });
-  }, []);
-
   return (
-    <div
-      className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0"
-      onMouseMove={handleMouseMove}
-    >
+    <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
       <div className="lg:flex lg:justify-between lg:gap-4">
-        <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+        <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:py-24">
           <LeftPanel activeSection={activeSection} />
         </header>
 
-        <main id="content" className="pt-24 lg:w-1/2 lg:py-24">
+        <main id="content" className="pt-16 lg:w-1/2 lg:py-24">
+          {personalInfo.ui.showNovaAssistant && (
+            <div className="mb-16 lg:hidden">
+              <NovaChat variant="mobile" />
+            </div>
+          )}
+
           <AboutSection />
-          <ExperienceSection />
-          <ProjectsSection />
-          <ResearchSection />
           <UpdatesSection />
-          <ContactSection />
+          <ExperienceSection />
 
           <footer className="pb-16 text-sm text-slate-400">
             <p>
@@ -111,7 +86,6 @@ export default function Home() {
           </footer>
         </main>
       </div>
-
     </div>
   );
 }

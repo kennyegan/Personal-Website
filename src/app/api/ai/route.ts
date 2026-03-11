@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { experience, personalInfo } from '@/lib/personal-info';
-import { projects } from '@/lib/projects';
-import { researchPapers } from '@/lib/research';
+import { updates } from '@/lib/updates';
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,17 +31,8 @@ export async function POST(request: NextRequest) {
 function generateNovaResponse(message: string): string {
   const lowerMessage = message.toLowerCase();
   const currentRole = experience[0];
-  const featuredProjects = projects
-    .filter((project) => project.featured)
-    .slice(0, 3)
-    .map((project) => project.title);
-  const publishedResearchCount = researchPapers.filter(
-    (paper) => paper.status === 'Published'
-  ).length;
-  const researchAreas = Array.from(
-    new Set(researchPapers.flatMap((paper) => paper.tags))
-  ).slice(0, 4);
   const coreSkills = personalInfo.skills.core.slice(0, 4);
+  const latestUpdateGroup = updates[0];
 
   if (
     lowerMessage.includes('experience') ||
@@ -50,24 +40,16 @@ function generateNovaResponse(message: string): string {
     lowerMessage.includes('intern') ||
     lowerMessage.includes('role')
   ) {
-    return `Kenny currently works as a ${currentRole.title} at ${currentRole.company}. The portfolio also highlights independent project and research work spanning machine learning, data analysis, and software engineering.`;
+    return `Kenny currently works as a ${currentRole.title} at ${currentRole.company}. The portfolio currently focuses on background, recent updates, and experience.`;
   }
 
   if (
-    lowerMessage.includes('project') ||
-    lowerMessage.includes('portfolio') ||
-    lowerMessage.includes('build')
+    lowerMessage.includes('update') ||
+    lowerMessage.includes('recent') ||
+    lowerMessage.includes('latest') ||
+    lowerMessage.includes('news')
   ) {
-    return `The portfolio currently highlights ${projects.length} projects. Featured work includes ${formatList(featuredProjects)}. I can also tell you more about a specific project area if you want.`;
-  }
-
-  if (
-    lowerMessage.includes('research') ||
-    lowerMessage.includes('paper') ||
-    lowerMessage.includes('academic') ||
-    lowerMessage.includes('publication')
-  ) {
-    return `The site lists ${researchPapers.length} research entries, including ${publishedResearchCount} marked as published. Current themes include ${formatList(researchAreas)}. If you want, ask about one of the papers or research directions.`;
+    return `Recent updates highlighted on the site include ${formatList(latestUpdateGroup.items.slice(0, 2))}.`;
   }
 
   if (
@@ -75,7 +57,7 @@ function generateNovaResponse(message: string): string {
     lowerMessage.includes('technology') ||
     lowerMessage.includes('tech')
   ) {
-    return `Kenny's core focus areas include ${formatList(coreSkills)}. The broader portfolio leans into AI systems, full-stack development, data analysis, and research-driven experimentation.`;
+    return `Kenny's core focus areas include ${formatList(coreSkills)}.`;
   }
 
   if (
@@ -91,14 +73,14 @@ function generateNovaResponse(message: string): string {
     lowerMessage.includes('hi') ||
     lowerMessage.includes('hey')
   ) {
-    return "Hello. I'm Nova, Kenny's portfolio assistant. I can help you navigate the site's projects, research, experience, and contact details.";
+    return "Hello. I'm Nova, Kenny's portfolio assistant. I can help you with Kenny's background, recent updates, experience, skills, and contact details.";
   }
 
   if (lowerMessage.includes('nova') || lowerMessage.includes('who are you')) {
-    return "I'm Nova, the on-site assistant for Kenny's portfolio. My role is simple: help visitors quickly find the relevant context about his work, research, and background.";
+    return "I'm Nova, the on-site assistant for Kenny's portfolio. My role is simple: help visitors quickly find the relevant context about his background, updates, and experience.";
   }
 
-  return "I can help with Kenny's projects, research, experience, skills, or contact details. Ask about one of those areas and I'll answer from the portfolio content.";
+  return "I can help with Kenny's background, recent updates, experience, skills, or contact details. Ask about one of those areas and I'll answer from the portfolio content.";
 }
 
 function formatList(items: string[]): string {
