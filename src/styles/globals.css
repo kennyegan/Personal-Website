@@ -1379,6 +1379,11 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .blur-\[112px\] {
   --tw-blur: blur(112px);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -1386,6 +1391,10 @@ video {
 
 .blur-\[128px\] {
   --tw-blur: blur(128px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -1524,10 +1533,125 @@ body {
   opacity: 0.75;
 }
 
-/* Star background */
+/* Space environment layers */
+
+.space-environment {
+  position: absolute;
+  inset: 0;
+}
+
+.space-environment__base {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 17%, rgba(122, 92, 255, 0.06), transparent 24%),
+    radial-gradient(circle at 78% 16%, rgba(66, 215, 255, 0.04), transparent 21%);
+}
+
+.space-environment__gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(122, 92, 255, 0.08), transparent 22%),
+    radial-gradient(circle at 72% 20%, rgba(66, 215, 255, 0.05), transparent 20%),
+    radial-gradient(circle at 52% 56%, rgba(122, 92, 255, 0.03), transparent 34%);
+}
+
+.space-environment__cursor {
+  position: absolute;
+  inset: 0;
+  opacity: var(--cursor-opacity, 0);
+  background:
+    radial-gradient(
+      22rem circle at var(--cursor-x, 50vw) var(--cursor-y, 30vh),
+      rgba(230, 238, 248, 0.04),
+      rgba(66, 215, 255, 0.07) 18%,
+      transparent 52%
+    ),
+    radial-gradient(
+      38rem circle at var(--cursor-x, 50vw) var(--cursor-y, 30vh),
+      rgba(66, 215, 255, 0.035) 18%,
+      transparent 56%
+    ),
+    radial-gradient(
+      50rem circle at var(--cursor-x, 50vw) var(--cursor-y, 30vh),
+      rgba(122, 92, 255, 0.03),
+      transparent 58%
+    );
+  filter: blur(18px);
+  transition: opacity 180ms ease-out;
+  will-change: opacity;
+}
+
+.space-environment__nebula {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(144px);
+  opacity: 0.38;
+}
+
+.space-environment__nebula--violet {
+  top: -14%;
+  left: -12%;
+  width: min(58rem, 72vw);
+  height: min(44rem, 56vw);
+  background: radial-gradient(circle, rgba(122, 92, 255, 0.12), transparent 68%);
+  animation: space-drift 36s ease-in-out infinite alternate;
+}
+
+.space-environment__nebula--cyan {
+  right: -12%;
+  top: 12%;
+  width: min(44rem, 54vw);
+  height: min(40rem, 48vw);
+  background: radial-gradient(circle, rgba(66, 215, 255, 0.08), transparent 68%);
+  animation: space-drift 42s ease-in-out infinite alternate-reverse;
+}
+
+.space-environment__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, transparent 55%, rgba(2, 6, 13, 0.15) 80%, rgba(2, 6, 13, 0.35) 100%);
+}
+
+/* Twinkling stars — constellation effect */
 
 .star-twinkle {
   animation: star-twinkle ease-in-out infinite;
+  border-radius: 50%;
+}
+
+/* Subtle cross-flare on brighter twinkling stars */
+
+.star-twinkle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: star-flare ease-in-out infinite;
+  animation-duration: inherit;
+  animation-delay: inherit;
+}
+
+.star-twinkle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 300%;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: star-flare ease-in-out infinite;
+  animation-duration: inherit;
+  animation-delay: inherit;
 }
 
 @keyframes star-twinkle {
@@ -1536,7 +1660,46 @@ body {
   }
 
   50% {
-    opacity: 0.8;
+    opacity: 1;
+  }
+}
+
+@keyframes star-flare {
+  0%, 100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Solar system scene — positioned on the left side behind left panel */
+
+.starship-scene {
+  position: absolute;
+  bottom: 8%;
+  left: 0;
+  width: min(48rem, 50vw);
+  height: auto;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.starship-scene__svg {
+  width: 100%;
+  height: auto;
+}
+
+/* Nebula drift (kept from original) */
+
+@keyframes space-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(3%, -2%, 0) scale(1.04);
   }
 }
 
@@ -1560,6 +1723,39 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+  .space-environment__cursor {
+    opacity: calc(var(--cursor-opacity, 0) * 0.45);
+  }
+
+  .starship-scene {
+    width: min(40rem, 60vw);
+    bottom: 6%;
+    left: -5%;
+    opacity: 0.35;
+  }
+}
+
+@media (max-width: 640px) {
+  .space-environment__nebula {
+    filter: blur(100px);
+    opacity: 0.26;
+  }
+
+  .space-environment__cursor {
+    display: none;
+  }
+
+  .starship-scene {
+    width: min(36rem, 90vw);
+    bottom: 4%;
+    left: -5%;
+    opacity: 0.25;
   }
 }
 
