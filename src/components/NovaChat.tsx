@@ -1,102 +1,94 @@
 'use client';
 
 import type { VoiceHandler as VoiceHandlerType } from '@/lib/voice';
-import { useState, useRef, useEffect } from 'react';
-import { Send, Mic, MicOff, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Mic, MicOff, Send, X } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
 
-function NovaOrb({ onClick }: { onClick: () => void }) {
+interface NovaChatProps {
+  variant: 'desktop' | 'mobile';
+}
+
+const suggestedPrompts = [
+  'Give me a quick overview of Kenny.',
+  'What are Kenny\'s latest updates?',
+  'Summarize Kenny\'s experience.',
+] as const;
+
+function NovaSeal({ size = 'md' }: { size?: 'sm' | 'md' }) {
+  const sizeClasses = {
+    sm: 'h-11 w-11',
+    md: 'h-14 w-14',
+  };
+
+  return (
+    <div className={`nova-seal ${sizeClasses[size]} shrink-0`} aria-hidden="true" />
+  );
+}
+
+function NovaTriggerCard({
+  variant,
+  onClick,
+}: {
+  variant: NovaChatProps['variant'];
+  onClick: () => void;
+}) {
+  const isDesktop = variant === 'desktop';
+
   return (
     <button
+      type="button"
       onClick={onClick}
-      className="group flex flex-col items-center gap-5 cursor-pointer bg-transparent border-none outline-none"
-      aria-label="Open Nova AI chat"
+      className={`group relative isolate w-full overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(17,34,64,0.92),rgba(10,25,47,0.98))] text-left shadow-[0_20px_70px_rgba(2,8,23,0.24)] transition duration-300 hover:-translate-y-0.5 hover:border-white/[0.15] hover:shadow-[0_28px_80px_rgba(2,8,23,0.3)] ${
+        isDesktop ? 'px-6 py-6' : 'px-5 py-5'
+      }`}
+      aria-label="Open Nova AI assistant"
     >
-      {/* Orb container — large, fixed size so glow layers are contained */}
-      <div className="relative w-40 h-40 flex-shrink-0">
-        {/* Outermost nebular haze */}
-        <div
-          className="absolute inset-[-30px] rounded-full blur-3xl animate-nova-glow"
-          style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.18) 0%, rgba(220,38,38,0.06) 50%, transparent 70%)' }}
-        />
-
-        {/* Shock wave rings */}
-        <div className="absolute inset-[-4px] rounded-full border border-orange-400/20 animate-nova-ring" />
-        <div className="absolute inset-0 rounded-full border border-red-500/15 animate-nova-ring-delay" />
-
-        {/* Secondary ambient ring */}
-        <div className="absolute inset-2 rounded-full bg-orange-500/10 blur-2xl animate-nova-glow" />
-
-        {/* Ambient glow behind core */}
-        <div className="absolute inset-4 rounded-full bg-orange-500/25 blur-xl animate-nova-glow" />
-
-        {/* Core sphere — 24x24 (96px) */}
-        <div className="absolute inset-5 rounded-full nova-orb-core animate-nova-pulse group-hover:shadow-[0_0_50px_rgba(249,115,22,0.7),0_0_100px_rgba(220,38,38,0.3)] transition-shadow duration-500">
-          {/* Rotating ejecta rays */}
-          <div className="absolute inset-0 animate-nova-rotate">
-            {[...Array(16)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute top-1/2 left-1/2 origin-bottom"
-                style={{
-                  transform: `translate(-50%, -100%) rotate(${i * 22.5}deg)`,
-                }}
-              >
-                <div
-                  className={`w-px ${
-                    i % 2 === 0
-                      ? 'h-4 bg-gradient-to-t from-orange-400/40 to-white/60'
-                      : 'h-2.5 bg-gradient-to-t from-orange-300/20 to-orange-200/40'
-                  }`}
-                />
-              </div>
-            ))}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.12),transparent_28%),linear-gradient(135deg,transparent,rgba(255,255,255,0.03))] opacity-80" />
+      <div className="relative flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-amber-200/80 shadow-[0_0_16px_rgba(252,211,77,0.35)]" />
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+              AI portfolio assistant
+            </p>
           </div>
-
-          {/* Orbiting stellar material */}
-          {[0, 60, 120, 180, 240, 300].map((deg, i) => (
-            <div
-              key={deg}
-              className="absolute w-1.5 h-1.5 rounded-full bg-amber-200/70 blur-[0.5px]"
-              style={{
-                top: `${50 + 40 * Math.sin((deg * Math.PI) / 180)}%`,
-                left: `${50 + 40 * Math.cos((deg * Math.PI) / 180)}%`,
-                transform: 'translate(-50%, -50%)',
-                animation: `novaPulse ${1.8 + i * 0.3}s ease-in-out infinite`,
-              }}
-            />
-          ))}
-
-          {/* Hot inner core layers */}
-          <div
-            className="absolute inset-[18%] rounded-full blur-[4px]"
-            style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.8) 0%, rgba(249,115,22,0.4) 100%)' }}
-          />
-          <div className="absolute inset-[28%] rounded-full bg-white/90 blur-[2px]" />
-          <div className="absolute inset-[36%] rounded-full bg-white blur-[0.5px]" />
+          <h3
+            className={`mt-4 font-semibold tracking-[-0.03em] text-slate-100 ${
+              isDesktop ? 'text-[2rem] leading-none' : 'text-2xl leading-none'
+            }`}
+          >
+            Ask Nova
+          </h3>
+          <p className="mt-3 max-w-[23rem] text-sm leading-6 text-slate-400">
+            Get a concise read on Kenny&apos;s background, recent updates,
+            experience, and contact details.
+          </p>
+        </div>
+        <div className="transition duration-300 group-hover:scale-[1.03]">
+          <NovaSeal size={isDesktop ? 'md' : 'sm'} />
         </div>
       </div>
-
-      {/* Text below */}
-      <div className="flex flex-col items-center gap-1">
-        <span className="text-sm font-bold uppercase tracking-[0.3em] text-slate-200 group-hover:text-orange-300 transition-colors duration-300">
-          Nova
+      <div className="relative mt-6 flex items-center justify-between border-t border-white/10 pt-4">
+        <span className="text-sm font-medium text-slate-200">
+          Open assistant
         </span>
-        <span className="text-[11px] leading-relaxed text-slate-400/60 text-center max-w-[180px]">
-          My personal AI assistant.
-          <br />
-          Click to ask anything about me.
+        <span className="inline-flex items-center gap-2 text-sm text-slate-300 transition-colors duration-300 group-hover:text-slate-100">
+          Explore
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.12] bg-white/5 text-slate-200 transition duration-300 group-hover:border-white/[0.18] group-hover:bg-white/[0.08]">
+            <ArrowRight size={14} />
+          </span>
         </span>
       </div>
     </button>
   );
 }
 
-export default function NovaChat() {
+export default function NovaChat({ variant }: NovaChatProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -119,14 +111,20 @@ export default function NovaChat() {
   }, [messages]);
 
   useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
+    if (isOpen) {
+      inputRef.current?.focus();
+    }
   }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsOpen(false);
+
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
     };
+
     document.addEventListener('keydown', handleEsc);
     return () => document.removeEventListener('keydown', handleEsc);
   }, [isOpen]);
@@ -134,7 +132,8 @@ export default function NovaChat() {
   const sendMessage = async (text: string) => {
     if (!text.trim()) return;
 
-    const userMessage: Message = { role: 'user', content: text.trim() };
+    const content = text.trim();
+    const userMessage: Message = { role: 'user', content };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
@@ -143,7 +142,7 @@ export default function NovaChat() {
       const res = await fetch('/api/ai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text.trim() }),
+        body: JSON.stringify({ message: content }),
       });
       const data = await res.json();
       setMessages((prev) => [
@@ -153,7 +152,10 @@ export default function NovaChat() {
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: 'assistant', content: 'Sorry, something went wrong.' },
+        {
+          role: 'assistant',
+          content: 'Sorry, something went wrong.',
+        },
       ]);
     } finally {
       setIsLoading(false);
@@ -173,7 +175,9 @@ export default function NovaChat() {
       setIsListening(true);
       const transcript = await voiceHandler.startListening();
       setIsListening(false);
-      if (transcript) sendMessage(transcript);
+      if (transcript) {
+        sendMessage(transcript);
+      }
     } catch {
       setIsListening(false);
     }
@@ -181,106 +185,114 @@ export default function NovaChat() {
 
   return (
     <>
-      {/* Orb trigger — parent in LeftPanel handles centering */}
-      <NovaOrb onClick={() => setIsOpen(true)} />
+      <NovaTriggerCard variant={variant} onClick={() => setIsOpen(true)} />
 
-      {/* Full-screen chat overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 md:p-12">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10">
           <div
-            className="absolute inset-0 bg-navy-900/85 backdrop-blur-sm"
+            className="absolute inset-0 bg-[rgba(6,14,28,0.82)] backdrop-blur-md"
             onClick={() => setIsOpen(false)}
           />
 
-          {/* Chat window */}
-          <div className="relative w-full max-w-2xl h-[80vh] max-h-[700px] rounded-2xl border border-orange-500/10 bg-navy-900 shadow-[0_0_60px_rgba(249,115,22,0.08)] flex flex-col overflow-hidden">
-            {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-navy-700/50">
-              <div className="flex items-center gap-3">
-                {/* Mini orb */}
-                <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0">
-                  <div className="absolute inset-[-2px] rounded-full bg-orange-500/15 blur-sm animate-nova-glow" />
-                  <div className="w-6 h-6 rounded-full nova-orb-core animate-nova-pulse">
-                    <div className="absolute inset-[30%] rounded-full bg-white/90 blur-[0.5px]" />
-                  </div>
-                </div>
+          <div className="relative flex h-[min(760px,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(17,34,64,0.96),rgba(10,25,47,0.98))] shadow-[0_36px_120px_rgba(2,8,23,0.58)]">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.07),transparent_34%),linear-gradient(180deg,transparent,rgba(255,255,255,0.02))]" />
+
+            <div className="relative flex items-start justify-between gap-4 border-b border-white/[0.08] px-5 py-5 sm:px-6">
+              <div className="flex items-start gap-4">
+                <NovaSeal size="sm" />
                 <div>
-                  <h3 className="text-sm font-bold text-slate-200 tracking-wide">
-                    Nova
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                    AI portfolio assistant
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-slate-100">
+                    Ask Nova
                   </h3>
-                  <p className="text-[10px] text-slate-400/60">
-                    Kenny&apos;s AI assistant
+                  <p className="mt-2 max-w-lg text-sm leading-6 text-slate-400">
+                    A concise guide to Kenny&apos;s background, recent updates,
+                    experience, and contact details.
                   </p>
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
-                className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-navy-800/50 transition-colors"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-slate-400 transition-colors hover:border-white/[0.16] hover:bg-white/[0.05] hover:text-slate-200"
                 aria-label="Close chat"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
-              {messages.length === 0 && (
-                <div className="flex flex-col items-center justify-center h-full text-center gap-4">
-                  {/* Decorative orb */}
-                  <div className="relative w-20 h-20">
-                    <div className="absolute inset-[-8px] rounded-full border border-orange-500/20 animate-nova-ring" />
-                    <div className="absolute inset-[-4px] rounded-full border border-red-500/10 animate-nova-ring-delay" />
-                    <div className="absolute inset-[-6px] rounded-full bg-orange-500/10 blur-lg animate-nova-glow" />
-                    <div className="absolute inset-2 rounded-full nova-orb-core animate-nova-pulse">
-                      <div className="absolute inset-[30%] rounded-full bg-white/90 blur-[1px]" />
+            <div className="relative flex-1 overflow-y-auto px-5 py-5 sm:px-6">
+              {messages.length === 0 ? (
+                <div className="flex h-full items-center justify-center">
+                  <div className="w-full max-w-2xl rounded-[28px] border border-white/[0.08] bg-white/[0.03] p-6 shadow-[0_24px_80px_rgba(2,8,23,0.18)]">
+                    <div className="flex items-start gap-4">
+                      <NovaSeal size="sm" />
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                          Start here
+                        </p>
+                        <h4 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-100">
+                          Ask for a curated overview
+                        </h4>
+                        <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400">
+                          Use Nova to quickly understand Kenny&apos;s work
+                          without scanning the full page first.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                      {suggestedPrompts.map((prompt) => (
+                        <button
+                          key={prompt}
+                          type="button"
+                          onClick={() => sendMessage(prompt)}
+                          className="rounded-2xl border border-white/[0.08] bg-white/[0.02] px-4 py-4 text-left text-sm leading-6 text-slate-300 transition duration-300 hover:border-white/[0.14] hover:bg-white/[0.05] hover:text-slate-100"
+                        >
+                          {prompt}
+                        </button>
+                      ))}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-slate-200 font-medium text-lg">
-                      Hi, I&apos;m Nova
-                    </p>
-                    <p className="text-sm text-slate-400/70 mt-1.5 max-w-xs leading-relaxed">
-                      Ask me anything about Kenny&apos;s work, research,
-                      projects, or experience.
-                    </p>
-                  </div>
                 </div>
-              )}
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex ${
-                    msg.role === 'user' ? 'justify-end' : 'justify-start'
-                  }`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-                      msg.role === 'user'
-                        ? 'bg-orange-500/10 text-orange-200 border border-orange-500/15'
-                        : 'bg-navy-800 text-slate-300 border border-navy-700/40'
-                    }`}
-                  >
-                    {msg.content}
-                  </div>
-                </div>
-              ))}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-navy-800 border border-navy-700/40 rounded-2xl px-4 py-3">
-                    <div className="flex gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-400/60 animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-400/60 animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-400/60 animate-bounce" style={{ animationDelay: '300ms' }} />
+              ) : (
+                <div className="space-y-4">
+                  {messages.map((msg, i) => (
+                    <div
+                      key={i}
+                      className={`flex ${
+                        msg.role === 'user' ? 'justify-end' : 'justify-start'
+                      }`}
+                    >
+                      <div
+                        className={`max-w-[85%] rounded-[24px] px-4 py-3 text-sm leading-7 shadow-[0_12px_40px_rgba(2,8,23,0.08)] sm:max-w-[75%] ${
+                          msg.role === 'user'
+                            ? 'border border-white/10 bg-slate-100 text-navy-900'
+                            : 'border border-white/[0.08] bg-white/[0.04] text-slate-300'
+                        }`}
+                      >
+                        {msg.content}
+                      </div>
                     </div>
-                  </div>
+                  ))}
+                  {isLoading && (
+                    <div className="flex justify-start">
+                      <div className="rounded-[24px] border border-white/[0.08] bg-white/[0.04] px-4 py-3">
+                        <div className="flex items-center gap-2 animate-pulse">
+                          <span className="h-2 w-2 rounded-full bg-amber-200/50" />
+                          <span className="h-2 w-2 rounded-full bg-amber-200/[0.35]" />
+                          <span className="h-2 w-2 rounded-full bg-amber-200/[0.2]" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input bar */}
-            <div className="px-6 py-4 border-t border-navy-700/50">
+            <div className="relative border-t border-white/[0.08] px-5 py-4 sm:px-6">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -293,31 +305,32 @@ export default function NovaChat() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask Nova anything..."
-                  className="flex-1 rounded-xl bg-navy-800/80 px-4 py-3 text-sm text-slate-200 placeholder-slate-400/50 outline-none border border-navy-700/30 focus:border-orange-500/30 transition-colors"
+                  placeholder="Ask about background, updates, or experience..."
+                  className="h-12 flex-1 rounded-full border border-white/10 bg-white/[0.04] px-5 text-sm text-slate-200 placeholder:text-slate-500 focus:border-white/16 focus:outline-none"
                   disabled={isLoading}
                 />
                 {voiceHandler && (
                   <button
                     type="button"
                     onClick={handleVoice}
-                    className={`p-2.5 rounded-xl transition-all ${
+                    className={`inline-flex h-12 w-12 items-center justify-center rounded-full border transition-colors ${
                       isListening
-                        ? 'bg-orange-500/10 text-orange-400 border border-orange-500/30'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-navy-800/50 border border-transparent'
+                        ? 'border-amber-200/30 bg-amber-200/10 text-amber-100'
+                        : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/[0.16] hover:text-slate-200'
                     }`}
                     aria-label={isListening ? 'Stop listening' : 'Voice input'}
                   >
-                    {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+                    {isListening ? <MicOff size={17} /> : <Mic size={17} />}
                   </button>
                 )}
                 <button
                   type="submit"
                   disabled={isLoading || !input.trim()}
-                  className="p-2.5 rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20 transition-all hover:bg-orange-500/20 disabled:opacity-30 disabled:hover:bg-orange-500/10"
+                  className="inline-flex h-12 items-center gap-2 rounded-full bg-slate-100 px-5 text-sm font-medium text-navy-900 transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                   aria-label="Send message"
                 >
-                  <Send size={18} />
+                  Send
+                  <Send size={15} />
                 </button>
               </form>
             </div>

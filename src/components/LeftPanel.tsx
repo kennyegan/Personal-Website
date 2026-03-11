@@ -6,11 +6,8 @@ import NovaChat from '@/components/NovaChat';
 
 const navItems = [
   { id: 'about', label: 'About' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'research', label: 'Research' },
   { id: 'updates', label: 'Updates' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'experience', label: 'Experience' },
 ];
 
 interface LeftPanelProps {
@@ -19,8 +16,7 @@ interface LeftPanelProps {
 
 export default function LeftPanel({ activeSection }: LeftPanelProps) {
   return (
-    <div className="flex flex-col h-full w-full">
-      {/* Top block: identity + nav */}
+    <div className="flex w-full flex-col lg:min-h-[calc(100vh-12rem)]">
       <div>
         <h1 className="text-4xl font-bold text-slate-100 sm:text-5xl">
           <a href="/">{personalInfo.name}</a>
@@ -60,13 +56,18 @@ export default function LeftPanel({ activeSection }: LeftPanelProps) {
         </nav>
       </div>
 
-      {/* Middle: Nova — flex-1 lets it fill the gap, grid places orb dead center */}
-      <div className="hidden lg:flex flex-1 items-center justify-center">
-        <NovaChat />
-      </div>
+      {personalInfo.ui.showNovaAssistant && (
+        <div className="mt-14 hidden lg:flex justify-center">
+          <div className="w-full max-w-[320px]">
+            <NovaChat variant="desktop" />
+          </div>
+        </div>
+      )}
 
-      {/* Bottom: social links */}
-      <ul className="flex items-center gap-5" aria-label="Social links">
+      <ul
+        className="mt-auto flex items-center gap-5 pt-12"
+        aria-label="Social links"
+      >
         <li>
           <a
             href={personalInfo.social.github}
