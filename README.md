@@ -42,12 +42,13 @@ src/
     personal-info.ts     Profile, site URL, resume setting, experience data
     projects.ts          Project data
     research.ts          Research data
-    updates.ts           Recent update timeline
     voice.ts             Browser speech helper for Nova
   styles/
     globals.css          Global styles and Nova visual treatment
   types/
     speech.d.ts          Web Speech API typings
+data/
+  timeline.ts           Current focus card content and Updates timeline entries
 ```
 
 ## Content Sources
@@ -56,7 +57,7 @@ Most of the site content is data-driven:
 - `src/lib/personal-info.ts`
 - `src/lib/projects.ts`
 - `src/lib/research.ts`
-- `src/lib/updates.ts`
+- `data/timeline.ts`
 
 When an asset does not exist yet, leave the corresponding URL unset instead of linking to a missing file.
 
