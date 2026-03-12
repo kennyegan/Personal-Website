@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { experience, personalInfo } from '@/lib/personal-info';
-import { updates } from '@/lib/updates';
+import { currentFocus, timelineItems } from '@data/timeline';
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,7 +32,7 @@ function generateNovaResponse(message: string): string {
   const lowerMessage = message.toLowerCase();
   const currentRole = experience[0];
   const coreSkills = personalInfo.skills.core.slice(0, 4);
-  const latestUpdateGroup = updates[0];
+  const latestTimelineItems = timelineItems.slice(0, 2);
 
   if (
     lowerMessage.includes('experience') ||
@@ -49,7 +49,20 @@ function generateNovaResponse(message: string): string {
     lowerMessage.includes('latest') ||
     lowerMessage.includes('news')
   ) {
-    return `Recent updates highlighted on the site include ${formatList(latestUpdateGroup.items.slice(0, 2))}.`;
+    return `Recent updates highlighted on the site include ${formatList(
+      latestTimelineItems.map((item) => item.title)
+    )}.`;
+  }
+
+  if (
+    lowerMessage.includes('current focus') ||
+    lowerMessage.includes('focus') ||
+    lowerMessage.includes('working on') ||
+    lowerMessage.includes('now')
+  ) {
+    return `${currentFocus.summary} Current priorities include ${formatList(
+      currentFocus.items
+    )}.`;
   }
 
   if (
