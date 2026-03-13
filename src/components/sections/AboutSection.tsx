@@ -16,42 +16,31 @@ export default function AboutSection() {
             systems to the internals of modern machine learning models.
           </p>
           <p>
-            I care about building systems that are both rigorous and real. That
-            means writing clean, production-grade software and designing
-            experiments that produce genuine insight rather than just
-            impressive metrics.
+            I focus on building systems that are both rigorous and real,
+            combining production-grade engineering with experiments that
+            produce genuine insight rather than just impressive metrics.
           </p>
           <p>
             I currently work as an{' '}
-            <span className="text-text-primary">AI Research Assistant</span>,
-            where I help develop machine learning systems for speech and
-            biosignal understanding. The goal of this research is to enable
-            more reliable speech decoding and enhancement from difficult
-            sensing environments, helping move assistive and human-computer
-            interfaces toward more natural and accessible communication.
-          </p>
-          <p>
-            Previously, I worked as a{' '}
+            <span className="text-text-primary">AI Research Assistant</span>{' '}
+            developing machine learning systems for speech and biosignal
+            understanding. Previously, I worked as a{' '}
             <span className="text-text-primary">
               Software Engineering Intern (Machine Learning Focus)
             </span>{' '}
             at <span className="text-accent-cyan">Capital Technology Group</span>,
-            where I worked on machine learning systems analyzing large
-            government and financial datasets. My work involved developing
-            models and data pipelines supporting anomaly detection, trade
-            surveillance, and predictive analytics across complex regulatory
-            environments.
+            contributing to ML systems operating on large government and
+            financial datasets for anomaly detection, trade surveillance, and
+            predictive analytics.
           </p>
           <p>
-            Outside of research, I spend a lot of time engineering systems that
-            live beyond the lab. That includes embedded platforms, data
-            infrastructure, and technical software designed to move ideas from
-            theory into real-world deployment.
+            Outside of research, I build systems that connect theory with
+            deployment, including embedded platforms, data infrastructure, and
+            technical software.
           </p>
           <p>
             Some of the systems I&apos;m currently building can&apos;t be
-            public yet. When they are, you&apos;ll probably see them appear
-            here.
+            public yet. When they are, they&apos;ll probably show up here.
           </p>
         </div>
       </div>

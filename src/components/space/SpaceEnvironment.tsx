@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 // Seeded random for deterministic star placement (no layout shift between renders)
 function seededRandom(seed: number) {
@@ -54,8 +54,11 @@ function generateTwinklingStars(count: number, seed: number): TwinklingStar[] {
   return stars;
 }
 
+const DISTANT_STARS = generateDistantStars(150, 12345);
+const TWINKLING_STARS = generateTwinklingStars(20, 54321);
+
 function drawStarsOnCanvas(canvas: HTMLCanvasElement) {
-  const dpr = window.devicePixelRatio || 1;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   const w = window.innerWidth;
   const h = window.innerHeight;
 
@@ -70,8 +73,7 @@ function drawStarsOnCanvas(canvas: HTMLCanvasElement) {
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, w, h);
 
-  const distantStars = generateDistantStars(280, 12345);
-  for (const star of distantStars) {
+  for (const star of DISTANT_STARS) {
     ctx.beginPath();
     ctx.arc((star.x / 100) * w, (star.y / 100) * h, star.size, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
@@ -83,7 +85,6 @@ export default function SpaceEnvironment() {
   const prefersReducedMotion = useReducedMotion();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const environmentRef = useRef<HTMLDivElement>(null);
-  const [twinklingStars] = useState(() => generateTwinklingStars(65, 54321));
 
   // Draw distant stars on canvas
   useEffect(() => {
@@ -102,7 +103,7 @@ export default function SpaceEnvironment() {
 
   // Cursor glow effect
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(pointer: fine)');
+    const mediaQuery = window.matchMedia('(pointer: fine) and (min-width: 1024px)');
     if (prefersReducedMotion || !mediaQuery.matches) return;
 
     const environment = environmentRef.current;
@@ -176,12 +177,12 @@ export default function SpaceEnvironment() {
         <div className="space-environment__nebula space-environment__nebula--violet" />
         <div className="space-environment__nebula space-environment__nebula--cyan" />
 
-        {/* Layer 2: Distant static stars (canvas — 280 tiny faint dots) */}
+        {/* Layer 2: Distant static stars */}
         <canvas ref={canvasRef} className="absolute inset-0" />
 
-        {/* Layer 3: Foreground twinkling stars (65 brighter DOM elements) */}
+        {/* Layer 3: Brighter twinkling stars */}
         <div className="absolute inset-0">
-          {twinklingStars.map((star, i) => (
+          {TWINKLING_STARS.map((star, i) => (
             <span
               key={i}
               className={prefersReducedMotion ? '' : 'star-twinkle'}

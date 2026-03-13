@@ -1,144 +1,395 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Crosshair } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { DM_Mono, Sora } from 'next/font/google';
 import {
   currentFocus,
   timelineItems,
   type TimelineCategory,
+  type TimelineItem,
 } from '@data/timeline';
 
-const categoryStyles: Record<TimelineCategory, string> = {
-  Research:
-    'border-accent-cyan/20 bg-accent-cyan/[0.08] text-accent-cyan',
-  Publication:
-    'border-accent-violet/22 bg-accent-violet/[0.1] text-accent-violet',
-  Career: 'border-border/80 bg-white/[0.03] text-text-primary',
-  Product:
-    'border-accent-cyan/16 bg-accent-cyan/[0.06] text-text-primary',
-  Aerospace:
-    'border-accent-violet/18 bg-accent-violet/[0.08] text-text-primary',
-  Engineering: 'border-mint/20 bg-mint/[0.08] text-mint',
+const sora = Sora({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+});
+
+const dmMono = DM_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+});
+
+const badgeStyles: Record<
+  TimelineCategory,
+  { label: string; className: string }
+> = {
+  Research: {
+    label: 'RESEARCH',
+    className: 'border-[#38bdf8]/40 bg-[#38bdf8]/10 text-[#38bdf8]',
+  },
+  Publication: {
+    label: 'PUBLICATION',
+    className: 'border-[#34d399]/40 bg-[#34d399]/10 text-[#34d399]',
+  },
+  Career: {
+    label: 'CAREER',
+    className: 'border-[#fbbf24]/40 bg-[#fbbf24]/10 text-[#fbbf24]',
+  },
+  Project: {
+    label: 'PROJECT',
+    className: 'border-[#a78bfa]/40 bg-[#a78bfa]/10 text-[#a78bfa]',
+  },
+  Milestone: {
+    label: 'MILESTONE',
+    className: 'border-[#fb7185]/40 bg-[#fb7185]/10 text-[#fb7185]',
+  },
+  Stealth: {
+    label: '🔒 STEALTH',
+    className: 'border-[#475569]/55 bg-[#475569]/18 text-[#cbd5e1]',
+  },
+  Aerospace: {
+    label: 'AEROSPACE',
+    className: 'border-[#818cf8]/40 bg-[#818cf8]/10 text-[#818cf8]',
+  },
+  Award: {
+    label: 'AWARD',
+    className: 'border-[#f59e0b]/40 bg-[#f59e0b]/10 text-[#fbbf24]',
+  },
+  Founder: {
+    label: 'FOUNDER',
+    className: 'border-[#22c55e]/35 bg-[#22c55e]/10 text-[#86efac]',
+  },
 };
 
-const revealTransition = {
-  duration: 0.65,
-  ease: [0.22, 1, 0.36, 1] as const,
-};
+const sortedTimelineItems = [...timelineItems].sort((a, b) => {
+  const yearDelta = Number(b.date) - Number(a.date);
+  if (yearDelta !== 0) {
+    return yearDelta;
+  }
 
-function TimelineNode() {
+  return a.order - b.order;
+});
+
+const yearGroups = Array.from(
+  new Set(sortedTimelineItems.map((item) => item.date))
+).map((year) => ({
+  year,
+  items: sortedTimelineItems.filter((item) => item.date === year),
+}));
+
+function isExternalHref(href: string) {
+  return href.startsWith('http://') || href.startsWith('https://');
+}
+
+function TimelineNode({ pulse }: { pulse?: boolean }) {
   return (
-    <span className="absolute left-3 top-6 -translate-x-1/2 md:left-[-2rem]">
-      <span className="absolute inset-[-7px] rounded-full bg-accent-cyan/18 blur-[10px]" />
-      <span className="relative block h-3.5 w-3.5 rounded-full border border-accent-cyan/40 bg-background/90">
-        <span className="absolute inset-[3px] rounded-full bg-accent-cyan shadow-[0_0_14px_rgba(66,215,255,0.55)]" />
+    <span className="pointer-events-none absolute left-[11px] top-8 -translate-x-1/2">
+      <span
+        className={`relative block h-3.5 w-3.5 rounded-full border border-[#38bdf8]/45 bg-background ${
+          pulse ? 'updates-node-pulse' : ''
+        }`}
+      >
+        <span className="absolute inset-[3px] rounded-full bg-[#38bdf8]" />
       </span>
     </span>
   );
 }
 
+function CurrentFocusCard() {
+  return (
+    <div className="relative overflow-hidden rounded-[30px] border border-white/[0.07] bg-[rgba(8,16,30,0.8)] px-5 py-6 shadow-[0_20px_56px_rgba(2,8,23,0.24)] backdrop-blur-[12px] sm:px-7 sm:py-7">
+      <span className="updates-now-rail pointer-events-none absolute bottom-7 left-0 top-7 w-px rounded-full bg-[#38bdf8]" />
+      <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.08),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_45%)]" />
+
+      <div className="relative">
+        <div className="flex flex-wrap items-center gap-3">
+          <span
+            className={`${dmMono.className} inline-flex rounded-full border border-[#38bdf8]/30 bg-[#38bdf8]/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.28em] text-[#38bdf8]`}
+          >
+            {currentFocus.eyebrow}
+          </span>
+          <span
+            className={`${dmMono.className} inline-flex rounded-full border border-[#818cf8]/20 bg-[#818cf8]/10 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.22em] text-[#818cf8]`}
+          >
+            Current work
+          </span>
+        </div>
+
+        <h3
+          className={`${sora.className} mt-4 text-[1.85rem] font-semibold tracking-[-0.045em] text-[#f5fbff] sm:text-[2.1rem]`}
+        >
+          {currentFocus.title}
+        </h3>
+
+        <p className="mt-4 max-w-3xl text-[14px] leading-7 text-[#c6d4e8] sm:text-[15px]">
+          {currentFocus.summary}
+        </p>
+
+        <ul className="mt-6 grid gap-3 md:grid-cols-3">
+          {currentFocus.items.map((item) => (
+            <li
+              key={item}
+              className="rounded-[18px] border border-white/[0.07] bg-white/[0.03] px-4 py-4 text-[14px] leading-6 text-[#dbe7f6]"
+            >
+              <span className="mb-3 block h-px w-10 bg-gradient-to-r from-[#38bdf8] to-transparent" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function UpdateCard({
+  item,
+  expanded,
+  onToggle,
+}: {
+  item: TimelineItem;
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  const badge = badgeStyles[item.category];
+
+  return (
+    <article className="relative pl-8">
+      <TimelineNode pulse={item.pulseNode} />
+
+      <div className="group relative overflow-hidden rounded-[24px] border border-white/[0.07] bg-[rgba(8,16,30,0.78)] shadow-[0_14px_36px_rgba(2,8,23,0.2)] transition duration-200 hover:border-[#38bdf8]/22">
+        <span className="pointer-events-none absolute bottom-5 left-0 top-5 w-px bg-[#38bdf8]/32 transition-all duration-300 group-hover:bg-[#38bdf8]/72" />
+
+        <button
+          type="button"
+          onClick={onToggle}
+          className="block w-full px-5 py-5 text-left"
+          aria-expanded={expanded}
+        >
+          <div className="flex flex-wrap items-center gap-3">
+            <span
+              className={`${dmMono.className} inline-flex rounded-full border px-3 py-1 text-[10px] font-medium uppercase tracking-[0.24em] ${badge.className}`}
+            >
+              {badge.label}
+            </span>
+            <span
+              className={`${dmMono.className} text-[10px] uppercase tracking-[0.24em] text-[#818cf8]`}
+            >
+              {item.date}
+            </span>
+            <span
+              className={`${dmMono.className} ml-auto inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-[#73839a]`}
+            >
+              {expanded ? 'Less' : 'More'}
+              <ChevronDown
+                size={13}
+                className={`transition-transform duration-300 ${
+                  expanded ? 'rotate-180' : ''
+                }`}
+              />
+            </span>
+          </div>
+
+          <h3
+            className={`${sora.className} mt-4 max-w-2xl text-[16px] font-semibold leading-6 text-[#f4f8ff] sm:text-[17px]`}
+          >
+            {item.title}
+          </h3>
+
+          <p className="mt-3 max-w-[44rem] text-[14px] leading-6 text-[#9fb0c3]">
+            {item.description}
+          </p>
+        </button>
+
+        <div
+          className={`grid overflow-hidden px-5 transition-[grid-template-rows,opacity,margin] duration-300 ease-out ${
+            expanded
+              ? 'mb-5 mt-1 grid-rows-[1fr] opacity-100'
+              : 'mb-0 mt-0 grid-rows-[0fr] opacity-0'
+          }`}
+        >
+          <div className="overflow-hidden">
+            <div className="border-t border-white/[0.06] pt-4">
+              <p className="max-w-[44rem] text-[14px] leading-6 text-[#cad7e8]">
+                {item.details}
+              </p>
+
+              {item.link && (
+                <div className="mt-4">
+                  <a
+                    href={item.link.href}
+                    target={isExternalHref(item.link.href) ? '_blank' : undefined}
+                    rel={isExternalHref(item.link.href) ? 'noopener noreferrer' : undefined}
+                    onClick={(event) => event.stopPropagation()}
+                    className={`${dmMono.className} inline-flex items-center gap-2 rounded-full border border-[#38bdf8]/35 px-3 py-2 text-[11px] font-medium text-[#38bdf8] transition duration-300 hover:bg-[#38bdf8]/10`}
+                  >
+                    {item.link.label}
+                    <ArrowUpRight size={13} />
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function YearSection({
+  year,
+  items,
+  open,
+  onToggle,
+  expandedCards,
+  onToggleCard,
+}: {
+  year: string;
+  items: TimelineItem[];
+  open: boolean;
+  onToggle: () => void;
+  expandedCards: Record<string, boolean>;
+  onToggleCard: (id: string) => void;
+}) {
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={onToggle}
+        className={`flex w-full items-center gap-4 rounded-[18px] border border-white/[0.05] bg-white/[0.015] px-3 py-3 text-left transition duration-300 hover:border-[#38bdf8]/14 hover:bg-white/[0.025] ${
+          open ? 'border-[#38bdf8]/12 bg-white/[0.02]' : ''
+        }`}
+        aria-expanded={open}
+        aria-controls={`timeline-year-${year}`}
+      >
+        <span
+          className={`${dmMono.className} text-[12px] font-medium uppercase tracking-[0.28em] text-[#818cf8]`}
+        >
+          {year}
+        </span>
+        <span className="h-px flex-1 bg-gradient-to-r from-[#818cf8]/35 via-white/10 to-transparent" />
+        <span
+          className={`${dmMono.className} inline-flex min-w-8 items-center justify-center rounded-full border border-white/[0.07] bg-white/[0.03] px-2 py-1 text-[10px] uppercase tracking-[0.22em] text-[#94a3b8]`}
+        >
+          {items.length}
+        </span>
+        <ChevronDown
+          size={15}
+          className={`text-[#94a3b8] transition-transform duration-300 ${
+            open ? 'rotate-180' : ''
+          }`}
+        />
+      </button>
+
+      <div
+        id={`timeline-year-${year}`}
+        className={`grid overflow-hidden transition-[grid-template-rows,opacity,margin] duration-300 ease-out ${
+          open
+            ? 'mt-4 grid-rows-[1fr] opacity-100'
+            : 'mt-1 grid-rows-[0fr] opacity-70'
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="space-y-4 pb-1">
+            {items.map((item) => (
+              <UpdateCard
+                key={item.id}
+                item={item}
+                expanded={!!expandedCards[item.id]}
+                onToggle={() => onToggleCard(item.id)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function UpdatesSection() {
+  const [openYears, setOpenYears] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(yearGroups.map(({ year }) => [year, year === '2026']))
+  );
+  const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
+    {}
+  );
+
+  const toggleYear = (year: string) => {
+    setOpenYears((prev) => ({ ...prev, [year]: !prev[year] }));
+  };
+
+  const toggleCard = (id: string) => {
+    setExpandedCards((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   return (
     <section id="updates" className="mb-24 scroll-mt-16 lg:mb-28 lg:scroll-mt-24">
       <div className="mb-8 flex items-center gap-4">
-        <h2 className="text-[0.68rem] font-bold uppercase tracking-[0.26em] text-text-primary">
+        <h2
+          className={`${dmMono.className} text-[0.68rem] font-medium uppercase tracking-[0.28em] text-text-primary`}
+        >
           Updates
         </h2>
         <span className="h-px flex-1 bg-gradient-to-r from-border/80 to-transparent" />
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 18 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={revealTransition}
-        className="relative overflow-hidden rounded-[34px] border border-accent-violet/20 bg-surface/56 p-6 shadow-[0_30px_90px_rgba(2,8,23,0.28)] backdrop-blur-xl sm:p-8"
-      >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(122,92,255,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(66,215,255,0.08),transparent_34%)]" />
-        <div className="pointer-events-none absolute right-0 top-0 h-36 w-36 rounded-full bg-accent-cyan/[0.06] blur-[80px]" />
+      <div className="relative">
+        <CurrentFocusCard />
 
-        <div className="relative">
-          <div className="flex items-start justify-between gap-6">
-            <div>
-              <span className="inline-flex items-center rounded-full border border-accent-cyan/16 bg-accent-cyan/[0.08] px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.24em] text-accent-cyan">
-                {currentFocus.eyebrow}
-              </span>
-              <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-text-primary sm:text-[2rem]">
-                {currentFocus.title}
-              </h3>
-            </div>
+        <div className="relative mt-8 rounded-[30px] border border-white/[0.07] bg-[rgba(6,14,26,0.64)] p-4 shadow-[0_20px_56px_rgba(2,8,23,0.24)] backdrop-blur-[12px] sm:p-5">
+          <span className="pointer-events-none absolute inset-0 rounded-[30px] bg-[linear-gradient(180deg,rgba(255,255,255,0.015),transparent_38%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.05),transparent_24%)]" />
+          <div className="pointer-events-none absolute bottom-5 left-[15px] top-5 w-px bg-[#38bdf8]/72 shadow-[0_0_8px_#38bdf8]" />
 
-            <span className="hidden h-11 w-11 items-center justify-center rounded-full border border-accent-violet/20 bg-background/40 text-accent-violet sm:flex">
-              <Crosshair size={16} />
-            </span>
-          </div>
-
-          <p className="mt-4 max-w-2xl text-[1.02rem] leading-8 text-text-primary/90">
-            {currentFocus.summary}
-          </p>
-
-          <div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {currentFocus.items.map((item) => (
-              <div
-                key={item}
-                className="rounded-[22px] border border-border/70 bg-background/24 px-4 py-4 shadow-[0_18px_45px_rgba(2,8,23,0.14)]"
-              >
-                <div className="flex items-start gap-3">
-                  <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-mint shadow-[0_0_14px_rgba(34,230,184,0.35)]" />
-                  <p className="text-sm leading-7 text-text-secondary">{item}</p>
-                </div>
-              </div>
+          <div className="relative space-y-4">
+            {yearGroups.map(({ year, items }) => (
+              <YearSection
+                key={year}
+                year={year}
+                items={items}
+                open={!!openYears[year]}
+                onToggle={() => toggleYear(year)}
+                expandedCards={expandedCards}
+                onToggleCard={toggleCard}
+              />
             ))}
           </div>
         </div>
-      </motion.div>
-
-      <div className="relative mt-10">
-        <div className="pointer-events-none absolute bottom-4 left-3 top-4 w-px bg-gradient-to-b from-accent-violet/45 via-border/80 to-transparent md:left-[6.5rem]" />
-
-        <div className="space-y-6">
-          {timelineItems.map((item, index) => (
-            <motion.article
-              key={`${item.date}-${item.title}`}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ ...revealTransition, delay: index * 0.04 }}
-              className="relative md:grid md:grid-cols-[5.25rem_1fr] md:gap-8"
-            >
-              <div className="hidden pt-5 text-right md:block">
-                <span className="text-[0.68rem] font-bold uppercase tracking-[0.24em] text-text-secondary">
-                  {item.date}
-                </span>
-              </div>
-
-              <div className="relative pl-8 md:pl-0">
-                <TimelineNode />
-
-                <div className="group rounded-[28px] border border-border/75 bg-surface/44 p-5 shadow-[0_24px_70px_rgba(2,8,23,0.18)] backdrop-blur-xl transition duration-300 hover:border-accent-cyan/18 hover:bg-surface/52 hover:shadow-[0_30px_80px_rgba(2,8,23,0.28)] sm:p-6">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span
-                      className={`rounded-full border px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.18em] ${categoryStyles[item.category]}`}
-                    >
-                      {item.category}
-                    </span>
-                    <span className="text-[0.68rem] font-bold uppercase tracking-[0.22em] text-text-secondary md:hidden">
-                      {item.date}
-                    </span>
-                  </div>
-
-                  <h3 className="mt-4 text-lg font-semibold tracking-[-0.025em] text-text-primary sm:text-[1.15rem]">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-text-secondary sm:text-[0.97rem]">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
       </div>
+
+      <style jsx>{`
+        .updates-now-rail {
+          box-shadow: 0 0 16px rgba(56, 189, 248, 0.65);
+          animation: updates-now-pulse 3.2s ease-in-out infinite;
+        }
+
+        .updates-node-pulse {
+          animation: updates-node-pulse 2.8s ease-in-out infinite;
+        }
+
+        @keyframes updates-now-pulse {
+          0%,
+          100% {
+            opacity: 0.56;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.36);
+          }
+
+          50% {
+            opacity: 1;
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+          }
+        }
+
+        @keyframes updates-node-pulse {
+          0%,
+          100% {
+            box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.2);
+          }
+
+          55% {
+            box-shadow: 0 0 0 8px rgba(56, 189, 248, 0);
+          }
+        }
+      `}</style>
     </section>
   );
 }

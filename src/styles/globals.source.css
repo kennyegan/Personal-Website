@@ -139,7 +139,7 @@ body {
       rgba(122, 92, 255, 0.03),
       transparent 58%
     );
-  filter: blur(18px);
+  filter: blur(12px);
   transition: opacity 180ms ease-out;
   will-change: opacity;
 }
@@ -147,8 +147,8 @@ body {
 .space-environment__nebula {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(144px);
-  opacity: 0.38;
+  filter: blur(110px);
+  opacity: 0.26;
 }
 
 .space-environment__nebula--violet {
@@ -157,7 +157,6 @@ body {
   width: min(58rem, 72vw);
   height: min(44rem, 56vw);
   background: radial-gradient(circle, rgba(122, 92, 255, 0.12), transparent 68%);
-  animation: space-drift 36s ease-in-out infinite alternate;
 }
 
 .space-environment__nebula--cyan {
@@ -166,7 +165,6 @@ body {
   width: min(44rem, 54vw);
   height: min(40rem, 48vw);
   background: radial-gradient(circle, rgba(66, 215, 255, 0.08), transparent 68%);
-  animation: space-drift 42s ease-in-out infinite alternate-reverse;
 }
 
 .space-environment__vignette {
@@ -180,54 +178,16 @@ body {
 .star-twinkle {
   animation: star-twinkle ease-in-out infinite;
   border-radius: 50%;
-}
-
-/* Subtle cross-flare on brighter twinkling stars */
-.star-twinkle::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  animation: star-flare ease-in-out infinite;
-  animation-duration: inherit;
-  animation-delay: inherit;
-}
-
-.star-twinkle::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1px;
-  height: 300%;
-  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.12), transparent);
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  animation: star-flare ease-in-out infinite;
-  animation-duration: inherit;
-  animation-delay: inherit;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.14);
+  will-change: opacity;
 }
 
 @keyframes star-twinkle {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 0.48;
   }
   50% {
-    opacity: 1;
-  }
-}
-
-@keyframes star-flare {
-  0%, 100% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.7;
+    opacity: 0.9;
   }
 }
 
@@ -267,8 +227,8 @@ body {
 
 @media (max-width: 640px) {
   .space-environment__nebula {
-    filter: blur(100px);
-    opacity: 0.26;
+    filter: blur(80px);
+    opacity: 0.18;
   }
 
   .space-environment__cursor {
