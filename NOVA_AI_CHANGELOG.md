@@ -1,6 +1,6 @@
 # Nova AI Supernova - Historical Development Changelog
 
-> Historical context only. This document captures the December 2024 Nova build-out and should not be used as the current source of truth for repo architecture or design rules. Use `README.md` and `CLAUDE.md` for the live project state.
+> Historical context only. This document captures the December 2024 Nova build-out and should not be used as the current source of truth for repo architecture or design rules. Use `README.md` and `CONTEXT.md` for the live project state.
 
 > **Project**: Personal Website - Nova AI Assistant Integration  
 > **Developer**: Kenny Egan  
