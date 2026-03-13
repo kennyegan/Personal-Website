@@ -8,14 +8,14 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   metadataBase: new URL(personalInfo.siteUrl),
   title: {
-    default: `${personalInfo.name} - AI Researcher & Software Engineer`,
+    default: `${personalInfo.name} - ${personalInfo.title}`,
     template: `%s | ${personalInfo.name}`,
   },
   description:
-    'AI Researcher and Software Engineer building research-driven AI systems, software platforms, and ambitious technical experiments.',
+    'AI researcher and engineer building research-driven AI systems, software platforms, and ambitious technical experiments.',
   keywords: [
     'AI Researcher',
-    'Software Engineer',
+    'Engineer',
     'Machine Learning',
     'Artificial Intelligence',
     'Full Stack Developer',
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: personalInfo.siteUrl,
-    title: `${personalInfo.name} - AI Researcher & Software Engineer`,
+    title: `${personalInfo.name} - ${personalInfo.title}`,
     description:
-      'AI Researcher and Software Engineer building research-driven AI systems, software platforms, and ambitious technical experiments.',
+      'AI researcher and engineer building research-driven AI systems, software platforms, and ambitious technical experiments.',
     siteName: personalInfo.name,
   },
   robots: {

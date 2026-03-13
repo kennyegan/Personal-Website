@@ -28,9 +28,7 @@ export default function LeftPanel({ activeSection }: LeftPanelProps) {
           {personalInfo.title}
         </h2>
         <p className="mt-6 max-w-lg text-[1.02rem] leading-8 text-text-secondary">
-          I build research-driven AI systems, embedded products, and technical
-          software across full-stack tools, analytics, and mission-oriented
-          engineering.
+          {personalInfo.tagline}
         </p>
 
         <nav className="mt-14 hidden lg:block" aria-label="In-page navigation">
