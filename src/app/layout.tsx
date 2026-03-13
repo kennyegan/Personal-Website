@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { personalInfo } from '@/lib/personal-info';
+import { manrope } from '@/lib/fonts';
 import '@/styles/globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(personalInfo.siteUrl),
@@ -59,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} relative min-h-screen bg-background text-text-secondary antialiased`}
+        className={`${manrope.className} relative min-h-screen bg-background text-text-secondary antialiased`}
       >
         <div className="min-h-screen">{children}</div>
       </body>

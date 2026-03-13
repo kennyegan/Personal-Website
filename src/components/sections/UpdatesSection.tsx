@@ -2,23 +2,13 @@
 
 import { useState } from 'react';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
-import { DM_Mono, Sora } from 'next/font/google';
+import { dmMono, sora } from '@/lib/fonts';
 import {
   currentFocus,
   timelineItems,
   type TimelineCategory,
   type TimelineItem,
 } from '@data/timeline';
-
-const sora = Sora({
-  subsets: ['latin'],
-  weight: ['600', '700'],
-});
-
-const dmMono = DM_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-});
 
 const badgeStyles: Record<
   TimelineCategory,
@@ -308,7 +298,7 @@ function YearSection({
 
 export default function UpdatesSection() {
   const [openYears, setOpenYears] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(yearGroups.map(({ year }) => [year, year === '2026']))
+    Object.fromEntries(yearGroups.map(({ year }) => [year, false]))
   );
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
     {}

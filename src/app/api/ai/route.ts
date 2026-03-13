@@ -2,6 +2,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import { experience, personalInfo } from '@/lib/personal-info';
 import { currentFocus, timelineItems } from '@data/timeline';
 
+function getExperienceStartYear(duration: string): number {
+  const match = duration.match(/\d{4}/);
+  return match ? Number(match[0]) : 0;
+}
+
+function getCurrentPrimaryRole() {
+  const activeRoles = experience.filter((role) =>
+    role.duration.toLowerCase().includes('present')
+  );
+
+  if (activeRoles.length === 0) {
+    return experience[0];
+  }
+
+  return [...activeRoles].sort(
+    (a, b) => getExperienceStartYear(b.duration) - getExperienceStartYear(a.duration)
+  )[0];
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { message } = await request.json();
@@ -30,7 +49,7 @@ export async function POST(request: NextRequest) {
 
 function generateNovaResponse(message: string): string {
   const lowerMessage = message.toLowerCase();
-  const currentRole = experience[0];
+  const currentRole = getCurrentPrimaryRole();
   const coreSkills = personalInfo.skills.core.slice(0, 4);
   const latestTimelineItems = timelineItems.slice(0, 2);
   const firstName = personalInfo.name.split(' ')[0];

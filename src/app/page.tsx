@@ -16,23 +16,56 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState('about');
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '0px 0px -60% 0px' }
-    );
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => section instanceof HTMLElement);
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+    if (sections.length === 0) return;
 
-    return () => observer.disconnect();
+    let frame = 0;
+
+    // Use scroll position instead of intersection events so the final section
+    // still highlights correctly when the page approaches the footer.
+    const updateActiveSection = () => {
+      frame = 0;
+
+      const viewportAnchor = window.scrollY + window.innerHeight * 0.34;
+      const isNearPageBottom =
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 32;
+
+      if (isNearPageBottom) {
+        setActiveSection(sections.at(-1)?.id ?? sectionIds[0]);
+        return;
+      }
+
+      let nextActiveSection = sections[0].id;
+
+      for (const section of sections) {
+        if (section.offsetTop <= viewportAnchor) {
+          nextActiveSection = section.id;
+        }
+      }
+
+      setActiveSection(nextActiveSection);
+    };
+
+    const requestSectionUpdate = () => {
+      if (frame) return;
+
+      frame = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    updateActiveSection();
+
+    window.addEventListener('scroll', requestSectionUpdate, { passive: true });
+    window.addEventListener('resize', requestSectionUpdate);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', requestSectionUpdate);
+      window.removeEventListener('resize', requestSectionUpdate);
+    };
   }, []);
 
   return (

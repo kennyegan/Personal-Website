@@ -1,6 +1,7 @@
 'use client';
 
 import { Github, Linkedin, Mail, FileText } from 'lucide-react';
+import { dmMono, sora } from '@/lib/fonts';
 import { personalInfo } from '@/lib/personal-info';
 import NovaChat from '@/components/NovaChat';
 
@@ -21,13 +22,17 @@ export default function LeftPanel({ activeSection }: LeftPanelProps) {
         <div className="pointer-events-none absolute -left-24 top-2 h-64 w-64 rounded-full bg-accent-violet/[0.08] blur-[128px]" />
         <div className="pointer-events-none absolute left-20 top-14 h-52 w-52 rounded-full bg-accent-cyan/[0.07] blur-[112px]" />
 
-        <h1 className="max-w-lg text-5xl font-semibold tracking-[-0.06em] text-text-primary sm:text-6xl xl:text-[4.9rem] xl:leading-[0.95]">
+        <h1
+          className={`${sora.className} max-w-lg text-5xl font-semibold tracking-[-0.07em] text-text-primary sm:text-6xl xl:text-[4.9rem] xl:leading-[0.95]`}
+        >
           <a href="/">{personalInfo.name}</a>
         </h1>
-        <h2 className="mt-6 text-xl font-medium tracking-[-0.025em] text-accent-cyan">
+        <h2
+          className={`${sora.className} mt-6 text-xl font-medium tracking-[-0.04em] text-accent-cyan`}
+        >
           {personalInfo.title}
         </h2>
-        <p className="mt-6 max-w-lg text-[1.02rem] leading-8 text-text-secondary">
+        <p className="mt-6 max-w-xl text-[1.02rem] leading-8 text-text-secondary">
           {personalInfo.tagline}
         </p>
 
@@ -37,7 +42,7 @@ export default function LeftPanel({ activeSection }: LeftPanelProps) {
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className={`group flex items-center gap-3 text-xs font-bold uppercase tracking-[0.24em] transition-colors duration-300 ${
+                  className={`${dmMono.className} group flex items-center gap-3 text-xs font-medium uppercase tracking-[0.28em] transition-colors duration-300 ${
                     activeSection === item.id
                       ? 'text-accent-cyan'
                       : 'text-text-secondary hover:text-text-primary'

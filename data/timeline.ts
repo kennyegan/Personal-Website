@@ -35,11 +35,11 @@ export const currentFocus: CurrentFocus = {
   eyebrow: 'NOW',
   title: 'Current Focus',
   summary:
-    'Building embedded satellite systems, advancing AI research, and quietly building a few things not ready to share yet.',
+    'Continuing my work as an AI Research Assistant while pursuing additional research and technical initiatives across machine learning, embedded systems, and data-driven infrastructure.',
   items: [
-    'PocketQube imaging & downlink',
-    'Speech enhancement & alignment research',
-    'Technical tools & data-driven systems',
+    'Speech & alignment research',
+    'Ongoing technical research',
+    'Private ventures in progress',
   ],
 };
 
@@ -65,14 +65,14 @@ export const timelineItems: TimelineItem[] = [
     description:
       'Presented architecture design, training setup, and early evaluation results for state-space-model speech enhancement research.',
     details:
-      'Presented architecture design, training setup, and early evaluation results for state-space model based speech enhancement research focused on difficult sensing environments and biosignal-derived audio. Work is part of ongoing research and cannot yet be publicly referenced while awaiting formal submission.',
+      'Presented architecture design, training setup, and early evaluation results for state-space model based speech enhancement research focused on difficult sensing environments and biosignal-derived audio. Because of publication rules, I cannot publicly share full details until the work is submitted to a conference. This section will be updated once submission is complete.',
   },
   {
     id: '2026-pocketqube-mission-work',
     date: '2026',
     order: 3,
     category: 'Aerospace',
-    title: 'Expanded PocketQube mission engineering work',
+    title: 'Expanded PocketQube Mission Engineering Work',
     description:
       'Continued development work on embedded systems and mission-level engineering for the Wentworth PocketQube satellite program.',
     details:
@@ -113,34 +113,23 @@ export const timelineItems: TimelineItem[] = [
     description:
       'Initiated research into mitigation strategies for sycophantic behavior in modern language models.',
     details:
-      'Initiated research investigating mechanisms and mitigation strategies for sycophantic behavior in modern language models. The project focuses on interpretability, evaluation benchmarks, and alignment techniques. Work is currently ongoing and cannot yet be publicly referenced while awaiting submission.',
-  },
-  {
-    id: '2025-ssm-speech-enhancement',
-    date: '2025',
-    order: 3,
-    category: 'Research',
-    title: 'State Space Models for Speech Enhancement (In Progress)',
-    description:
-      'Began research exploring state-space architectures for speech enhancement in challenging sensing modalities.',
-    details:
-      'Began research exploring state-space architectures for speech enhancement using challenging sensing modalities. Work focuses on architecture design, training strategies, and system-level evaluation. Details cannot yet be publicly referenced while awaiting submission.',
+      'Initiated research investigating mechanisms and mitigation strategies for sycophantic behavior in modern language models. The project focuses on interpretability, evaluation benchmarks, and alignment techniques. Because of publication rules, I cannot publicly share full technical details until the work is submitted to a conference. This section will be updated after submission.',
   },
   {
     id: '2025-space-elevator',
     date: '2025',
-    order: 4,
+    order: 3,
     category: 'Research',
     title: 'Space Elevator Systems Research (Early Investigation)',
     description:
-      'Began exploratory research into the engineering feasibility of tether-based space infrastructure.',
+      'Started exploratory research investigating the engineering feasibility of tether-based space infrastructure and next-generation orbital systems.',
     details:
-      'Began exploratory research investigating the engineering feasibility of large-scale tether-based space infrastructure, including early system modeling and conceptual architecture exploration.',
+      'Started exploratory research investigating the engineering feasibility of large-scale tether-based space infrastructure and next-generation orbital systems. Because of publication rules and ongoing research development, technical details cannot yet be publicly shared. This section will be updated when the work progresses further.',
   },
   {
     id: '2025-financial-infra-stealth',
     date: '2025',
-    order: 5,
+    order: 4,
     category: 'Stealth',
     title: 'Large-Scale Financial Infrastructure System (Stealth)',
     description:
@@ -166,9 +155,9 @@ export const timelineItems: TimelineItem[] = [
     category: 'Award',
     title: 'MPA Scholarship — Massachusetts Police Association',
     description:
-      'Awarded the Massachusetts Police Association scholarship for academic performance and leadership.',
+      'Awarded the Massachusetts Police Association scholarship recognizing academic achievement and leadership.',
     details:
-      'Awarded the Massachusetts Police Association scholarship recognizing academic performance and leadership.',
+      'Awarded the Massachusetts Police Association scholarship recognizing academic achievement and leadership.',
   },
   {
     id: '2024-wit-it-specialist',
@@ -202,17 +191,6 @@ export const timelineItems: TimelineItem[] = [
       'Several software and infrastructure systems are currently under development.',
     details:
       'Several software and infrastructure systems currently under development that will be released publicly when ready.',
-  },
-  {
-    id: '2023-bridgewater-raynham',
-    date: '2023',
-    order: 2,
-    category: 'Milestone',
-    title: 'Graduated Highschool',
-    description:
-      'Graduated from Bridgewater-Raynham High School.',
-    details:
-      'Graduated from Bridgewater-Raynham High School before beginning undergraduate studies in computer science.',
   },
   {
     id: '2023-bachelors',

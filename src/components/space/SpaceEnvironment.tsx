@@ -1,7 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Seeded random for deterministic star placement (no layout shift between renders)
 function seededRandom(seed: number) {
@@ -82,9 +81,22 @@ function drawStarsOnCanvas(canvas: HTMLCanvasElement) {
 }
 
 export default function SpaceEnvironment() {
-  const prefersReducedMotion = useReducedMotion();
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const environmentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const updateMotionPreference = () => {
+      setPrefersReducedMotion(mediaQuery.matches);
+    };
+
+    updateMotionPreference();
+    mediaQuery.addEventListener('change', updateMotionPreference);
+
+    return () => mediaQuery.removeEventListener('change', updateMotionPreference);
+  }, []);
 
   // Draw distant stars on canvas
   useEffect(() => {
@@ -158,10 +170,7 @@ export default function SpaceEnvironment() {
   }, [prefersReducedMotion]);
 
   return (
-    <motion.div
-      initial={prefersReducedMotion ? false : { opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.9, ease: 'easeOut' }}
+    <div
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
       aria-hidden="true"
     >
@@ -205,6 +214,6 @@ export default function SpaceEnvironment() {
         <div className="space-environment__vignette" />
 
       </div>
-    </motion.div>
+    </div>
   );
 }
