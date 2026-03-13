@@ -1,4 +1,4 @@
-# Kenny Egan Personal Website
+# Kenneth Egan Personal Website
 
 Single-page portfolio built with Next.js 14, TypeScript, and Tailwind CSS.
 

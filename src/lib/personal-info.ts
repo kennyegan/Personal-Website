@@ -8,7 +8,7 @@ const resumeUrl: string | null = null;
 
 export const personalInfo = {
   // Basic Information
-  name: "Kenny Egan",
+  name: "Kenneth Egan",
   title: "AI Researcher & Software Engineer",
   bio: "SDE Intern at Capital Technology Group, passionate about building innovative AI solutions, data analysis, and full-stack development. Currently pursuing excellence in machine learning and creating impactful technology products.",
   location: "United States",

@@ -231,22 +231,6 @@ body {
   }
 }
 
-/* Solar system scene — positioned on the left side behind left panel */
-.starship-scene {
-  position: absolute;
-  bottom: 8%;
-  left: 0;
-  width: min(48rem, 50vw);
-  height: auto;
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-.starship-scene__svg {
-  width: 100%;
-  height: auto;
-}
-
 /* Nebula drift (kept from original) */
 @keyframes space-drift {
   from { transform: translate3d(0, 0, 0) scale(1); }
@@ -279,13 +263,6 @@ body {
   .space-environment__cursor {
     opacity: calc(var(--cursor-opacity, 0) * 0.45);
   }
-
-  .starship-scene {
-    width: min(40rem, 60vw);
-    bottom: 6%;
-    left: -5%;
-    opacity: 0.35;
-  }
 }
 
 @media (max-width: 640px) {
@@ -296,12 +273,5 @@ body {
 
   .space-environment__cursor {
     display: none;
-  }
-
-  .starship-scene {
-    width: min(36rem, 90vw);
-    bottom: 4%;
-    left: -5%;
-    opacity: 0.25;
   }
 }

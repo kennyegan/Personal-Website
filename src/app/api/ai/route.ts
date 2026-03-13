@@ -33,6 +33,7 @@ function generateNovaResponse(message: string): string {
   const currentRole = experience[0];
   const coreSkills = personalInfo.skills.core.slice(0, 4);
   const latestTimelineItems = timelineItems.slice(0, 2);
+  const firstName = personalInfo.name.split(' ')[0];
 
   if (
     lowerMessage.includes('experience') ||
@@ -40,7 +41,7 @@ function generateNovaResponse(message: string): string {
     lowerMessage.includes('intern') ||
     lowerMessage.includes('role')
   ) {
-    return `Kenny currently works as a ${currentRole.title} at ${currentRole.company}. The portfolio currently focuses on background, recent updates, and experience.`;
+    return `${firstName} currently works as a ${currentRole.title} at ${currentRole.company}. The portfolio currently focuses on background, recent updates, and experience.`;
   }
 
   if (
@@ -70,7 +71,7 @@ function generateNovaResponse(message: string): string {
     lowerMessage.includes('technology') ||
     lowerMessage.includes('tech')
   ) {
-    return `Kenny's core focus areas include ${formatList(coreSkills)}.`;
+    return `${firstName}'s core focus areas include ${formatList(coreSkills)}.`;
   }
 
   if (
@@ -78,7 +79,7 @@ function generateNovaResponse(message: string): string {
     lowerMessage.includes('hire') ||
     lowerMessage.includes('work with')
   ) {
-    return `The best way to reach Kenny is by email at ${personalInfo.email}. You can also use the LinkedIn link in the left rail if you prefer a professional intro there.`;
+    return `The best way to reach ${firstName} is by email at ${personalInfo.email}. You can also use the LinkedIn link in the left rail if you prefer a professional intro there.`;
   }
 
   if (
@@ -86,14 +87,14 @@ function generateNovaResponse(message: string): string {
     lowerMessage.includes('hi') ||
     lowerMessage.includes('hey')
   ) {
-    return "Hello. I'm Nova, Kenny's portfolio assistant. I can help you with Kenny's background, recent updates, experience, skills, and contact details.";
+    return `Hello. I'm Nova, ${firstName}'s portfolio assistant. I can help you with ${firstName}'s background, recent updates, experience, skills, and contact details.`;
   }
 
   if (lowerMessage.includes('nova') || lowerMessage.includes('who are you')) {
-    return "I'm Nova, the on-site assistant for Kenny's portfolio. My role is simple: help visitors quickly find the relevant context about his background, updates, and experience.";
+    return `I'm Nova, the on-site assistant for ${firstName}'s portfolio. My role is simple: help visitors quickly find the relevant context about ${firstName}'s background, updates, and experience.`;
   }
 
-  return "I can help with Kenny's background, recent updates, experience, skills, or contact details. Ask about one of those areas and I'll answer from the portfolio content.";
+  return `I can help with ${firstName}'s background, recent updates, experience, skills, or contact details. Ask about one of those areas and I'll answer from the portfolio content.`;
 }
 
 function formatList(items: string[]): string {

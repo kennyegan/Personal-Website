@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import StarshipScene from './StarshipScene';
 
 // Seeded random for deterministic star placement (no layout shift between renders)
 function seededRandom(seed: number) {
@@ -110,7 +109,6 @@ export default function SpaceEnvironment() {
     if (!environment) return;
 
     let positionFrame = 0;
-    let inactivityTimeout: number | null = null;
     let nextX = window.innerWidth * 0.42;
     let nextY = window.innerHeight * 0.28;
 
@@ -136,22 +134,22 @@ export default function SpaceEnvironment() {
       if (!positionFrame) {
         positionFrame = window.requestAnimationFrame(flushPointerPosition);
       }
+    };
 
-      if (inactivityTimeout) {
-        window.clearTimeout(inactivityTimeout);
-      }
-      inactivityTimeout = window.setTimeout(hideCursorGlow, 320);
+    const handlePointerEnter = () => {
+      environment.style.setProperty('--cursor-opacity', '1');
     };
 
     const handlePointerLeave = () => hideCursorGlow();
 
+    window.addEventListener('pointerenter', handlePointerEnter);
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('pointerleave', handlePointerLeave);
     window.addEventListener('blur', handlePointerLeave);
 
     return () => {
-      if (inactivityTimeout) window.clearTimeout(inactivityTimeout);
       if (positionFrame) window.cancelAnimationFrame(positionFrame);
+      window.removeEventListener('pointerenter', handlePointerEnter);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerleave', handlePointerLeave);
       window.removeEventListener('blur', handlePointerLeave);
@@ -205,8 +203,6 @@ export default function SpaceEnvironment() {
         {/* Vignette */}
         <div className="space-environment__vignette" />
 
-        {/* Solar system scene */}
-        <StarshipScene />
       </div>
     </motion.div>
   );

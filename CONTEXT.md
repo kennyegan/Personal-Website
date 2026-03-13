@@ -6,7 +6,7 @@ Use it as the durable source of project structure, design constraints, UI rules,
 It is intentionally general and is not tied to any single AI model, vendor, or assistant.
 
 ## Project Overview
-Kenny Egan's personal website is a single-page portfolio with a split layout, a deep-space full-page atmosphere, a clean text-first hero in the left rail, and an embedded Nova assistant experience.
+Kenneth Egan's personal website is a single-page portfolio with a split layout, a deep-space full-page atmosphere, a clean text-first hero in the left rail, and an embedded Nova assistant experience.
 
 ## Tech Stack
 - Framework: Next.js 14 (App Router)

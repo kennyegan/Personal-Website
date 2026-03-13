@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   metadataBase: new URL(personalInfo.siteUrl),
   title: {
-    default: 'Kenny Egan - AI Researcher & Software Engineer',
-    template: '%s | Kenny Egan',
+    default: `${personalInfo.name} - AI Researcher & Software Engineer`,
+    template: `%s | ${personalInfo.name}`,
   },
   description:
     'AI Researcher and Software Engineer building research-driven AI systems, software platforms, and ambitious technical experiments.',
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
     'TypeScript',
     'Next.js',
   ],
-  authors: [{ name: 'Kenny Egan' }],
-  creator: 'Kenny Egan',
-  publisher: 'Kenny Egan',
+  authors: [{ name: personalInfo.name }],
+  creator: personalInfo.name,
+  publisher: personalInfo.name,
   alternates: {
     canonical: '/',
   },
@@ -33,10 +33,10 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: personalInfo.siteUrl,
-    title: 'Kenny Egan - AI Researcher & Software Engineer',
+    title: `${personalInfo.name} - AI Researcher & Software Engineer`,
     description:
       'AI Researcher and Software Engineer building research-driven AI systems, software platforms, and ambitious technical experiments.',
-    siteName: 'Kenny Egan',
+    siteName: personalInfo.name,
   },
   robots: {
     index: true,

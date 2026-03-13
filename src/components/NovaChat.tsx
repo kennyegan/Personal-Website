@@ -1,6 +1,7 @@
 'use client';
 
 import type { VoiceHandler as VoiceHandlerType } from '@/lib/voice';
+import { personalInfo } from '@/lib/personal-info';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Mic, MicOff, Send, X } from 'lucide-react';
 
@@ -13,10 +14,12 @@ interface NovaChatProps {
   variant: 'desktop' | 'mobile';
 }
 
+const firstName = personalInfo.name.split(' ')[0];
+
 const suggestedPrompts = [
-  'Give me a quick overview of Kenny.',
-  "What are Kenny's latest updates?",
-  "Summarize Kenny's experience.",
+  `Give me a quick overview of ${firstName}.`,
+  `What are ${firstName}'s latest updates?`,
+  `Summarize ${firstName}'s experience.`,
 ] as const;
 
 function NovaSeal({ size = 'md' }: { size?: 'sm' | 'md' }) {
@@ -71,7 +74,7 @@ function NovaTriggerCard({
             Ask Nova
           </h3>
           <p className="mt-3 max-w-[23rem] text-sm leading-6 text-text-secondary">
-            Get a concise read on Kenny&apos;s background, recent updates,
+            Get a concise read on {firstName}&apos;s background, recent updates,
             experience, and contact details.
           </p>
         </div>
@@ -220,7 +223,7 @@ export default function NovaChat({ variant }: NovaChatProps) {
                     Ask Nova
                   </h3>
                   <p className="mt-2 max-w-lg text-sm leading-6 text-text-secondary">
-                    A concise guide to Kenny&apos;s background, recent updates,
+                    A concise guide to {firstName}&apos;s background, recent updates,
                     experience, and contact details.
                   </p>
                 </div>
@@ -249,7 +252,7 @@ export default function NovaChat({ variant }: NovaChatProps) {
                           Ask for a curated overview
                         </h4>
                         <p className="mt-3 max-w-2xl text-sm leading-6 text-text-secondary">
-                          Use Nova to quickly understand Kenny&apos;s work
+                          Use Nova to quickly understand {firstName}&apos;s work
                           without scanning the full page first.
                         </p>
                       </div>
