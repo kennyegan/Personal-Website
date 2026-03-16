@@ -108,7 +108,7 @@ export const experience: ExperienceItem[] = [
     title: 'AI Research Assistant',
     company: 'Machine Learning Systems Research',
     location: 'United States',
-    duration: '2026 - Present',
+    duration: 'Jan 2026 - PRESENT',
     description:
       'Working as an AI Research Assistant focused on machine learning systems for speech and biosignal understanding. This work involves designing model architectures, building training pipelines, and evaluating models in challenging sensing environments. Current research includes work on state-space models for speech enhancement and alignment research involving language model behavior.',
     achievements: [
