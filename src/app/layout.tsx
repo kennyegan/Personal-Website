@@ -3,14 +3,16 @@ import { personalInfo } from '@/lib/personal-info';
 import { manrope } from '@/lib/fonts';
 import '@/styles/globals.css';
 
+const description =
+  'AI researcher and engineer building research-driven AI systems, software platforms, and ambitious technical experiments.';
+
 export const metadata: Metadata = {
   metadataBase: new URL(personalInfo.siteUrl),
   title: {
     default: `${personalInfo.name} - ${personalInfo.title}`,
     template: `%s | ${personalInfo.name}`,
   },
-  description:
-    'AI researcher and engineer building research-driven AI systems, software platforms, and ambitious technical experiments.',
+  description,
   keywords: [
     'AI Researcher',
     'Engineer',
@@ -27,14 +29,30 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: personalInfo.siteUrl,
     title: `${personalInfo.name} - ${personalInfo.title}`,
-    description:
-      'AI researcher and engineer building research-driven AI systems, software platforms, and ambitious technical experiments.',
+    description,
     siteName: personalInfo.name,
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: `${personalInfo.name} - ${personalInfo.title}`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${personalInfo.name} - ${personalInfo.title}`,
+    description,
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
@@ -49,6 +67,16 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: personalInfo.name,
+  jobTitle: personalInfo.title,
+  url: personalInfo.siteUrl,
+  email: personalInfo.email,
+  sameAs: [personalInfo.social.github, personalInfo.social.linkedin],
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -59,6 +87,10 @@ export default function RootLayout({
       <body
         className={`${manrope.className} relative min-h-screen bg-background text-text-secondary antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <div className="min-h-screen">{children}</div>
       </body>
     </html>

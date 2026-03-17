@@ -9,6 +9,8 @@ import { personalInfo } from '@/lib/personal-info';
 import AboutSection from '@/components/sections/AboutSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
 import UpdatesSection from '@/components/sections/UpdatesSection';
+import ScrollProgress from '@/components/ScrollProgress';
+import ScrollToTop from '@/components/ScrollToTop';
 
 const sectionIds = ['about', 'updates', 'experience'];
 
@@ -70,6 +72,8 @@ export default function Home() {
 
   return (
     <>
+      <ScrollProgress />
+      <ScrollToTop />
       <SpaceEnvironment />
 
       <div className="relative z-10 mx-auto min-h-screen max-w-screen-xl px-6 py-10 md:px-12 md:py-16 lg:px-20 lg:py-0">
@@ -99,7 +103,7 @@ export default function Home() {
                   href="https://nextjs.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text-primary transition-colors hover:text-accent-cyan"
+                  className="relative text-text-primary transition-colors hover:text-accent-cyan after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-accent-cyan after:transition-all after:duration-300 hover:after:w-full"
                 >
                   Next.js
                 </a>{' '}
@@ -108,7 +112,7 @@ export default function Home() {
                   href="https://tailwindcss.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text-primary transition-colors hover:text-accent-cyan"
+                  className="relative text-text-primary transition-colors hover:text-accent-cyan after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-accent-cyan after:transition-all after:duration-300 hover:after:w-full"
                 >
                   Tailwind CSS
                 </a>
@@ -117,7 +121,7 @@ export default function Home() {
                   href="https://vercel.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text-primary transition-colors hover:text-accent-cyan"
+                  className="relative text-text-primary transition-colors hover:text-accent-cyan after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-accent-cyan after:transition-all after:duration-300 hover:after:w-full"
                 >
                   Vercel
                 </a>
