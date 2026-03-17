@@ -12,6 +12,9 @@
   --color-accent-violet: 122 92 255;
   --color-mint: 34 230 184;
   --color-border: 24 38 56;
+  --color-accent-sky: 56 189 248;
+  --color-accent-indigo: 129 140 248;
+  --color-text-bright: 238 245 255;
 }
 
 * {
@@ -195,6 +198,40 @@ body {
 @keyframes space-drift {
   from { transform: translate3d(0, 0, 0) scale(1); }
   to { transform: translate3d(3%, -2%, 0) scale(1.04); }
+}
+
+/* Updates timeline pulse animations */
+.updates-now-rail {
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.65);
+  animation: updates-now-pulse 3.2s ease-in-out infinite;
+}
+
+.updates-node-pulse {
+  animation: updates-node-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes updates-now-pulse {
+  0%,
+  100% {
+    opacity: 0.56;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.36);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+  }
+}
+
+@keyframes updates-node-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.2);
+  }
+
+  55% {
+    box-shadow: 0 0 0 8px rgba(56, 189, 248, 0);
+  }
 }
 
 /* Focus styles */
