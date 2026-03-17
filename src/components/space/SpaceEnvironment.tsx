@@ -105,12 +105,19 @@ export default function SpaceEnvironment() {
 
     drawStarsOnCanvas(canvas);
 
+    let resizeTimer: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      if (canvasRef.current) drawStarsOnCanvas(canvasRef.current);
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (canvasRef.current) drawStarsOnCanvas(canvasRef.current);
+      }, 300);
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      clearTimeout(resizeTimer);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // Cursor glow effect

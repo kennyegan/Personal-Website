@@ -1,5 +1,6 @@
 'use client';
 
+import { motion, useReducedMotion } from 'framer-motion';
 import { Github, Linkedin, Mail, FileText } from 'lucide-react';
 import { dmMono, sora } from '@/lib/fonts';
 import { personalInfo } from '@/lib/personal-info';
@@ -15,53 +16,117 @@ interface LeftPanelProps {
   activeSection: string;
 }
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.15 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, ease: 'easeOut' as const },
+  },
+};
+
+const socialContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.5 },
+  },
+};
+
+const socialItemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: 'easeOut' as const },
+  },
+};
+
 export default function LeftPanel({ activeSection }: LeftPanelProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const MotionDiv = prefersReducedMotion ? 'div' : motion.div;
+  const MotionLi = prefersReducedMotion ? 'li' : motion.li;
+  const MotionUl = prefersReducedMotion ? 'ul' : motion.ul;
+
   return (
     <div className="flex w-full flex-col gap-8 lg:min-h-[calc(100vh-12rem)]">
-      <div className="relative">
+      <MotionDiv
+        className="relative"
+        {...(!prefersReducedMotion && {
+          variants: containerVariants,
+          initial: 'hidden',
+          animate: 'visible',
+        })}
+      >
         <div className="pointer-events-none absolute -left-24 top-2 h-64 w-64 rounded-full bg-accent-violet/[0.08] blur-[128px]" />
         <div className="pointer-events-none absolute left-20 top-14 h-52 w-52 rounded-full bg-accent-cyan/[0.07] blur-[112px]" />
 
-        <h1
-          className={`${sora.className} max-w-lg text-5xl font-semibold tracking-[-0.07em] text-text-primary sm:text-6xl xl:text-[4.9rem] xl:leading-[0.95]`}
+        <MotionLi
+          className="list-none"
+          {...(!prefersReducedMotion && { variants: itemVariants })}
         >
-          <a href="/">{personalInfo.name}</a>
-        </h1>
-        <h2
-          className={`${sora.className} mt-6 text-xl font-medium tracking-[-0.04em] text-accent-cyan`}
+          <h1
+            className={`${sora.className} max-w-lg text-5xl font-semibold tracking-[-0.07em] text-text-primary sm:text-6xl xl:text-[4.9rem] xl:leading-[0.95]`}
+          >
+            <a href="/">{personalInfo.name}</a>
+          </h1>
+        </MotionLi>
+        <MotionLi
+          className="list-none"
+          {...(!prefersReducedMotion && { variants: itemVariants })}
         >
-          {personalInfo.title}
-        </h2>
-        <p className="mt-6 max-w-xl text-[1.02rem] leading-8 text-text-secondary">
-          {personalInfo.tagline}
-        </p>
+          <h2
+            className={`${sora.className} mt-6 text-xl font-medium tracking-[-0.04em] text-accent-cyan`}
+          >
+            {personalInfo.title}
+          </h2>
+        </MotionLi>
+        <MotionLi
+          className="list-none"
+          {...(!prefersReducedMotion && { variants: itemVariants })}
+        >
+          <p className="mt-6 max-w-xl text-[1.02rem] leading-8 text-text-secondary">
+            {personalInfo.tagline}
+          </p>
+        </MotionLi>
 
-        <nav className="mt-14 hidden lg:block" aria-label="In-page navigation">
-          <ul className="space-y-4">
-            {navItems.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  className={`${dmMono.className} group flex items-center gap-3 text-xs font-medium uppercase tracking-[0.28em] transition-colors duration-300 ${
-                    activeSection === item.id
-                      ? 'text-accent-cyan'
-                      : 'text-text-secondary hover:text-text-primary'
-                  }`}
-                >
-                  <span
-                    className={`block h-px transition-all duration-300 ${
+        <MotionLi
+          className="list-none"
+          {...(!prefersReducedMotion && { variants: itemVariants })}
+        >
+          <nav className="mt-14 hidden lg:block" aria-label="In-page navigation">
+            <ul className="space-y-4">
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    className={`${dmMono.className} group flex items-center gap-3 text-xs font-medium uppercase tracking-[0.28em] transition-colors duration-300 ${
                       activeSection === item.id
-                        ? 'w-16 bg-accent-cyan shadow-[0_0_16px_rgba(66,215,255,0.28)]'
-                        : 'w-8 bg-border group-hover:w-16 group-hover:bg-text-primary'
+                        ? 'text-accent-cyan'
+                        : 'text-text-secondary hover:text-text-primary'
                     }`}
-                  />
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+                  >
+                    <span
+                      className={`block h-px transition-all duration-300 ${
+                        activeSection === item.id
+                          ? 'w-16 bg-accent-cyan shadow-[0_0_16px_rgba(66,215,255,0.28)]'
+                          : 'w-8 bg-border group-hover:w-16 group-hover:bg-text-primary'
+                      }`}
+                    />
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </MotionLi>
+      </MotionDiv>
 
       {personalInfo.ui.showNovaAssistant && (
         <div className="hidden lg:flex justify-center lg:pt-4">
@@ -71,55 +136,60 @@ export default function LeftPanel({ activeSection }: LeftPanelProps) {
         </div>
       )}
 
-      <ul
+      <MotionUl
         className="flex items-center gap-5 lg:mt-auto lg:pt-8"
         aria-label="Social links"
+        {...(!prefersReducedMotion && {
+          variants: socialContainerVariants,
+          initial: 'hidden',
+          animate: 'visible',
+        })}
       >
-        <li>
+        <MotionLi {...(!prefersReducedMotion && { variants: socialItemVariants })}>
           <a
             href={personalInfo.social.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text-secondary transition-colors hover:text-accent-cyan"
+            className="inline-block text-text-secondary transition-all duration-200 hover:text-accent-cyan hover:scale-110"
             aria-label="GitHub"
           >
             <Github size={20} />
           </a>
-        </li>
-        <li>
+        </MotionLi>
+        <MotionLi {...(!prefersReducedMotion && { variants: socialItemVariants })}>
           <a
             href={personalInfo.social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text-secondary transition-colors hover:text-accent-cyan"
+            className="inline-block text-text-secondary transition-all duration-200 hover:text-accent-cyan hover:scale-110"
             aria-label="LinkedIn"
           >
             <Linkedin size={20} />
           </a>
-        </li>
-        <li>
+        </MotionLi>
+        <MotionLi {...(!prefersReducedMotion && { variants: socialItemVariants })}>
           <a
             href={`mailto:${personalInfo.email}`}
-            className="text-text-secondary transition-colors hover:text-accent-cyan"
+            className="inline-block text-text-secondary transition-all duration-200 hover:text-accent-cyan hover:scale-110"
             aria-label="Email"
           >
             <Mail size={20} />
           </a>
-        </li>
+        </MotionLi>
         {personalInfo.resume.url && (
-          <li>
+          <MotionLi {...(!prefersReducedMotion && { variants: socialItemVariants })}>
             <a
               href={personalInfo.resume.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-text-secondary transition-colors hover:text-accent-cyan"
+              className="inline-block text-text-secondary transition-all duration-200 hover:text-accent-cyan hover:scale-110"
               aria-label="Resume"
             >
               <FileText size={20} />
             </a>
-          </li>
+          </MotionLi>
         )}
-      </ul>
+      </MotionUl>
     </div>
   );
 }
