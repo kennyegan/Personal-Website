@@ -125,12 +125,8 @@ function CurrentFocusCard() {
 
 function UpdateCard({
   item,
-  expanded,
-  onToggle,
 }: {
   item: TimelineItem;
-  expanded: boolean;
-  onToggle: () => void;
 }) {
   const badge = badgeStyles[item.category];
   const prefersReducedMotion = useReducedMotion();
@@ -142,11 +138,8 @@ function UpdateCard({
       <div className="group relative overflow-hidden rounded-[24px] border border-white/[0.07] bg-[rgba(8,16,30,0.78)] shadow-[0_14px_36px_rgba(2,8,23,0.2)] transition duration-200 hover:border-accent-sky/[0.22]">
         <span className="pointer-events-none absolute bottom-5 left-0 top-5 w-px bg-accent-sky/[0.32] transition-all duration-300 group-hover:bg-accent-sky/[0.72]" />
 
-        <button
-          type="button"
-          onClick={onToggle}
-          className="block w-full px-5 py-5 text-left active:scale-[0.998] transition-transform"
-          aria-expanded={expanded}
+        <div
+          className="block w-full px-5 py-5 text-left"
         >
           <div className="flex flex-wrap items-center gap-3">
             <span
@@ -159,17 +152,6 @@ function UpdateCard({
             >
               {item.date}
             </span>
-            <span
-              className={`${dmMono.className} ml-auto inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-text-secondary/60`}
-            >
-              {expanded ? 'Less' : 'More'}
-              <ChevronDown
-                size={13}
-                className={`transition-transform duration-300 ${
-                  expanded ? 'rotate-180' : ''
-                }`}
-              />
-            </span>
           </div>
 
           <h3
@@ -181,40 +163,21 @@ function UpdateCard({
           <p className="mt-3 max-w-[44rem] text-sm leading-6 text-text-secondary">
             {item.description}
           </p>
-        </button>
 
-        <AnimatePresence initial={false}>
-          {expanded && (
-            <motion.div
-              initial={prefersReducedMotion ? false : { height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden px-5"
-            >
-              <div className="border-t border-white/[0.06] pb-5 pt-4">
-                <p className="max-w-[44rem] text-sm leading-6 text-text-secondary/[0.85]">
-                  {item.details}
-                </p>
-
-                {item.link && (
-                  <div className="mt-4">
-                    <a
-                      href={item.link.href}
-                      target={isExternalHref(item.link.href) ? '_blank' : undefined}
-                      rel={isExternalHref(item.link.href) ? 'noopener noreferrer' : undefined}
-                      onClick={(event) => event.stopPropagation()}
-                      className={`${dmMono.className} inline-flex items-center gap-2 rounded-full border border-accent-sky/35 px-3 py-2 text-[11px] font-medium text-accent-sky transition duration-300 hover:bg-accent-sky/10`}
-                    >
-                      {item.link.label}
-                      <ArrowUpRight size={13} />
-                    </a>
-                  </div>
-                )}
-              </div>
-            </motion.div>
+          {item.link && (
+            <div className="mt-4 pb-2">
+              <a
+                href={item.link.href}
+                target={isExternalHref(item.link.href) ? '_blank' : undefined}
+                rel={isExternalHref(item.link.href) ? 'noopener noreferrer' : undefined}
+                className={`${dmMono.className} inline-flex items-center gap-2 rounded-full border border-accent-sky/35 px-3 py-2 text-[11px] font-medium text-accent-sky transition duration-300 hover:bg-accent-sky/10`}
+              >
+                {item.link.label}
+                <ArrowUpRight size={13} />
+              </a>
+            </div>
           )}
-        </AnimatePresence>
+        </div>
       </div>
     </article>
   );
@@ -225,15 +188,11 @@ function YearSection({
   items,
   open,
   onToggle,
-  expandedCards,
-  onToggleCard,
 }: {
   year: string;
   items: TimelineItem[];
   open: boolean;
   onToggle: () => void;
-  expandedCards: Record<string, boolean>;
-  onToggleCard: (id: string) => void;
 }) {
   const prefersReducedMotion = useReducedMotion();
 
@@ -282,8 +241,6 @@ function YearSection({
                 <UpdateCard
                   key={item.id}
                   item={item}
-                  expanded={!!expandedCards[item.id]}
-                  onToggle={() => onToggleCard(item.id)}
                 />
               ))}
             </div>
@@ -298,16 +255,9 @@ export default function UpdatesSection() {
   const [openYears, setOpenYears] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(yearGroups.map(({ year }) => [year, false]))
   );
-  const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
-    {}
-  );
 
   const toggleYear = (year: string) => {
     setOpenYears((prev) => ({ ...prev, [year]: !prev[year] }));
-  };
-
-  const toggleCard = (id: string) => {
-    setExpandedCards((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   return (
@@ -341,8 +291,6 @@ export default function UpdatesSection() {
                   items={items}
                   open={!!openYears[year]}
                   onToggle={() => toggleYear(year)}
-                  expandedCards={expandedCards}
-                  onToggleCard={toggleCard}
                 />
               ))}
             </div>
