@@ -25,7 +25,7 @@ export default function AboutSection() {
               My work spans the full stack of modern AI systems, from embedded and hardware-integrated environments to multimodal learning, model architecture, and production ML infrastructure. I focus on building systems that are technically rigorous while remaining practical and deployable in real-world environments.
             </p>
             <p>
-              I currently work as an <span className="text-text-primary">AI R&D Co-op</span> at <span className="text-accent-cyan">Amazon Lab126</span>, contributing to embedded AI and multimodal systems research focused on real-world intelligent systems and production-oriented AI technologies.
+              I currently work as an <span className="text-text-primary">AI R&D Co-op</span> at <span className="text-accent-cyan">Amazon Lab126</span>, contributing to embedded AI and multimodal systems research focused on real-world intelligent systems.
             </p>
             <p>
               Previously, I worked as a <span className="text-text-primary">Software Engineering Intern</span> with a machine learning focus at Capital Technology Group, contributing to ML systems operating on large government and financial datasets for anomaly detection, trade surveillance, predictive analytics, and data-driven risk modeling.
