@@ -166,8 +166,7 @@ export const experience: ExperienceItem[] = [
   },
   {
     title: 'Computer Science & Mathematics Tutor (Part-Time)',
-    company: 'Success Studio',
-    companyDetail: 'Wentworth Institute of Technology',
+    company: 'Success Studio, Wentworth Institute of Technology',
     location: 'United States',
     duration: 'Aug 2024 - Apr 2025',
     description:

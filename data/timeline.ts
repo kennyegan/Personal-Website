@@ -186,7 +186,7 @@ export const timelineItems: TimelineItem[] = [
     date: '2024',
     order: 4,
     category: 'Career',
-    title: 'Computer Science & Mathematics Tutor — Success Studio (Part-Time)',
+    title: 'Computer Science & Mathematics Tutor — Success Studio, Wentworth Institute of Technology (Part-Time)',
     description:
       'Provided tutoring support in computer science and mathematics for programming and quantitative problem-solving.',
     details:
