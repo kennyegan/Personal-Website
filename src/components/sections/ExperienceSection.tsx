@@ -23,7 +23,8 @@ function ExperienceCard({
   return (
     <AnimatedSection delay={index * 0.1}>
       <article
-        className={`group relative overflow-hidden rounded-[30px] border bg-[rgba(7,15,28,0.78)] shadow-[0_18px_46px_rgba(2,8,23,0.2)] backdrop-blur-md transition-[border-color,background-color,box-shadow] duration-300 ${
+        id={`experience-${index}`}
+        className={`scroll-mt-24 group relative overflow-hidden rounded-[30px] border bg-[rgba(7,15,28,0.78)] shadow-[0_18px_46px_rgba(2,8,23,0.2)] backdrop-blur-md transition-[border-color,background-color,box-shadow] duration-300 ${
           open
             ? 'border-accent-cyan/[0.18] bg-[rgba(8,16,30,0.88)] shadow-[0_22px_58px_rgba(2,8,23,0.28)]'
             : 'border-white/[0.06] hover:border-white/[0.1]'

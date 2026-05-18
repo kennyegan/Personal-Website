@@ -52,6 +52,10 @@ export const timelineItems: TimelineItem[] = [
     title: 'AI R&D Co-op — Amazon Lab126',
     description:
       'Joined Amazon Lab126 to conduct embedded AI and multimodal systems research.',
+    link: {
+      label: 'View Experience',
+      href: '#experience-0',
+    },
     pulseNode: true,
   },
   {
@@ -89,7 +93,11 @@ export const timelineItems: TimelineItem[] = [
     title: 'AI Research Assistant',
     description:
       'Began contributing to machine learning research focused on speech and biosignal understanding.',
+    link: {
+      label: 'View Experience',
+      href: '#experience-1',
     },
+  },
   {
     id: '2025-ctg-ml-intern',
     date: '2025',
@@ -99,8 +107,8 @@ export const timelineItems: TimelineItem[] = [
     description:
       'Designed and deployed machine learning systems and data pipelines for large government and financial datasets.',
     link: {
-      label: 'Experience',
-      href: '#experience',
+      label: 'View Experience',
+      href: '#experience-2',
     },
   },
   {
@@ -156,7 +164,11 @@ export const timelineItems: TimelineItem[] = [
     title: 'IT Specialist — Wentworth Institute of Technology (Part-Time)',
     description:
       'Worked on technical infrastructure, hardware support, and systems operations across campus environments.',
+    link: {
+      label: 'View Experience',
+      href: '#experience-4',
     },
+  },
   {
     id: '2024-success-studio-tutor',
     date: '2024',
@@ -165,7 +177,11 @@ export const timelineItems: TimelineItem[] = [
     title: 'Computer Science & Mathematics Tutor — Success Studio, Wentworth Institute of Technology (Part-Time)',
     description:
       'Provided tutoring support in computer science and mathematics for programming and quantitative problem-solving.',
+    link: {
+      label: 'View Experience',
+      href: '#experience-3',
     },
+  },
   {
     id: '2024-private-systems',
     date: '2024',

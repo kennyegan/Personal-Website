@@ -168,7 +168,7 @@ export const experience: ExperienceItem[] = [
     title: 'Computer Science & Mathematics Tutor (Part-Time)',
     company: 'Success Studio, Wentworth Institute of Technology',
     location: 'United States',
-    duration: 'Aug 2024 - Apr 2025',
+    duration: 'Aug 2024 - Dec 2025',
     description:
       'Tutor students in computer science and mathematics, helping them build strong foundations in programming, algorithms, and quantitative problem solving. Focused on helping students develop technical intuition and structured problem-solving skills.',
     achievements: [
@@ -189,7 +189,7 @@ export const experience: ExperienceItem[] = [
     title: 'IT Specialist (Part-Time)',
     company: 'Wentworth Institute of Technology',
     location: 'United States',
-    duration: 'Aug 2024 - Apr 2025',
+    duration: 'Aug 2024 - Dec 2025',
     description:
       'Provide technical support and infrastructure assistance across campus computing systems. Responsibilities include troubleshooting hardware and software systems, supporting engineering-focused computing environments, and assisting with IT infrastructure operations.',
     achievements: [
