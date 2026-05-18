@@ -1,6 +1,6 @@
 'use client';
 
-import { sora, dmMono } from '@/lib/fonts';
+import { playfair, dmMono } from '@/lib/fonts';
 
 export default function Error({
   reset,
@@ -17,7 +17,7 @@ export default function Error({
           Error
         </p>
         <h1
-          className={`${sora.className} mt-4 text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl`}
+          className={`${playfair.className} mt-4 text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl`}
         >
           Something went wrong
         </h1>

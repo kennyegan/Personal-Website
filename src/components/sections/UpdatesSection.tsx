@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
-import { dmMono, sora } from '@/lib/fonts';
+import { dmMono, playfair } from '@/lib/fonts';
 import {
   currentFocus,
   timelineItems,
@@ -109,7 +109,7 @@ function CurrentFocusCard() {
         </div>
 
         <h3
-          className={`${sora.className} mt-4 text-[1.85rem] font-semibold tracking-[-0.045em] text-text-bright sm:text-[2.1rem]`}
+          className={`${playfair.className} mt-4 text-[1.85rem] font-semibold tracking-[-0.045em] text-text-bright sm:text-[2.1rem]`}
         >
           {currentFocus.title}
         </h3>
@@ -184,7 +184,7 @@ function UpdateCard({
           </div>
 
           <h3
-            className={`${sora.className} mt-4 max-w-2xl text-base font-semibold leading-6 text-text-bright sm:text-[17px]`}
+            className={`${playfair.className} mt-4 max-w-2xl text-base font-semibold leading-6 text-text-bright sm:text-[17px]`}
           >
             {item.title}
           </h3>

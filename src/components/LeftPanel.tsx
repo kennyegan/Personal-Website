@@ -2,9 +2,8 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, Linkedin, Mail, FileText } from 'lucide-react';
-import { dmMono, sora } from '@/lib/fonts';
+import { dmMono, playfair, inter } from '@/lib/fonts';
 import { personalInfo } from '@/lib/personal-info';
-import NovaChat from '@/components/NovaChat';
 
 const navItems = [
   { id: 'about', label: 'About' },
@@ -72,7 +71,7 @@ export default function LeftPanel({ activeSection }: LeftPanelProps) {
           {...(!prefersReducedMotion && { variants: itemVariants })}
         >
           <h1
-            className={`${sora.className} max-w-lg text-5xl font-semibold tracking-[-0.07em] text-text-primary sm:text-6xl xl:text-[4.9rem] xl:leading-[0.95]`}
+            className={`${playfair.className} max-w-lg text-5xl font-semibold tracking-[-0.07em] text-text-primary sm:text-6xl xl:text-[4.9rem] xl:leading-[0.95]`}
           >
             <a href="/">{personalInfo.name}</a>
           </h1>
@@ -82,7 +81,7 @@ export default function LeftPanel({ activeSection }: LeftPanelProps) {
           {...(!prefersReducedMotion && { variants: itemVariants })}
         >
           <h2
-            className={`${sora.className} mt-6 text-xl font-medium tracking-[-0.04em] text-accent-cyan`}
+            className={`${inter.className} mt-6 text-xl font-medium tracking-[-0.04em] text-accent-cyan`}
           >
             {personalInfo.title}
           </h2>
@@ -128,13 +127,6 @@ export default function LeftPanel({ activeSection }: LeftPanelProps) {
         </MotionLi>
       </MotionDiv>
 
-      {personalInfo.ui.showNovaAssistant && (
-        <div className="hidden lg:flex justify-center lg:pt-4">
-          <div className="w-full max-w-[320px]">
-            <NovaChat variant="desktop" />
-          </div>
-        </div>
-      )}
 
       <MotionUl
         className="flex items-center gap-5 lg:mt-auto lg:pt-8"

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { personalInfo } from '@/lib/personal-info';
-import { manrope } from '@/lib/fonts';
+import { inter } from '@/lib/fonts';
 import '@/styles/globals.css';
 
 const description =
@@ -85,7 +85,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${manrope.className} relative min-h-screen bg-background text-text-secondary antialiased`}
+        className={`${inter.className} relative min-h-screen bg-background text-text-secondary antialiased`}
       >
         <script
           type="application/ld+json"

@@ -1,4 +1,4 @@
-import { sora, dmMono } from '@/lib/fonts';
+import { playfair, dmMono } from '@/lib/fonts';
 
 export default function NotFound() {
   return (
@@ -10,7 +10,7 @@ export default function NotFound() {
           404
         </p>
         <h1
-          className={`${sora.className} mt-4 text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl`}
+          className={`${playfair.className} mt-4 text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl`}
         >
           Page not found
         </h1>

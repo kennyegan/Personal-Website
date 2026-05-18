@@ -1,14 +1,15 @@
-import { DM_Mono, Manrope, Sora } from 'next/font/google';
+import { DM_Mono, Inter, Playfair_Display } from 'next/font/google';
 
-export const manrope = Manrope({
+export const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
 });
 
-export const sora = Sora({
+export const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['600', '700'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
+  style: ['normal', 'italic'],
 });
 
 export const dmMono = DM_Mono({

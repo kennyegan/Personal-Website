@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import { dmMono, sora } from '@/lib/fonts';
+import { dmMono, playfair } from '@/lib/fonts';
 import { experience } from '@/lib/personal-info';
 import AnimatedSection from '@/components/motion/AnimatedSection';
 
@@ -76,7 +76,7 @@ function ExperienceCard({
 
             <div className="mt-4 min-w-0">
               <h3
-                className={`${sora.className} max-w-[38rem] text-[1.1rem] font-semibold leading-[1.18] tracking-[-0.045em] text-text-bright sm:text-[1.24rem]`}
+                className={`${playfair.className} max-w-[38rem] text-[1.1rem] font-semibold leading-[1.18] tracking-[-0.045em] text-text-bright sm:text-[1.24rem]`}
               >
                 {role.title}
               </h3>

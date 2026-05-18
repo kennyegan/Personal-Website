@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import LeftPanel from '@/components/LeftPanel';
-import NovaChat from '@/components/NovaChat';
 import SpaceEnvironment from '@/components/space/SpaceEnvironment';
 import { personalInfo } from '@/lib/personal-info';
 
@@ -86,11 +85,6 @@ export default function Home() {
             id="content"
             className="pt-16 lg:w-[53%] lg:border-l lg:border-border/45 lg:py-24 lg:pl-10 xl:pl-14"
           >
-            {personalInfo.ui.showNovaAssistant && (
-              <div className="mb-16 lg:hidden">
-                <NovaChat variant="mobile" />
-              </div>
-            )}
 
             <AboutSection />
             <UpdatesSection />
