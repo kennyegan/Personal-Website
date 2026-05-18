@@ -1,7 +1,6 @@
 // ================================
 // PERSONAL INFORMATION CONFIG
 // ================================
-// Update this file with your personal information to customize the entire website
 
 const siteUrl = 'https://kennethegan.com';
 const resumeUrl: string | null = null;
@@ -21,10 +20,10 @@ export const personalInfo = {
   social: {
     github: "https://github.com/kennyegan",
     linkedin: "https://www.linkedin.com/in/kenneth-egan2005/",
-    twitter: "https://twitter.com/kennyegan", // Update if you have one
+    twitter: "https://twitter.com/kennyegan",
     website: siteUrl,
-    scholar: "https://scholar.google.com/citations?user=kenny-egan", // Update if you have one
-    calendly: "https://calendly.com/kenny-egan/30min" // Update if you have one
+    scholar: "https://scholar.google.com/citations?user=kenny-egan",
+    calendly: "https://calendly.com/kenny-egan/30min"
   },
   
   // Professional Profile
@@ -105,10 +104,29 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
+    title: 'AI R&D Co-op',
+    company: 'Amazon Lab126',
+    companyDetail: 'Contract',
+    location: 'United States',
+    duration: 'May 2026 - Present',
+    description:
+      'Working as an AI R&D Co-op at Amazon Lab126, focusing on embedded AI and multimodal systems research. Specific project details are currently under development and will be updated upon completion.',
+    achievements: [
+      'Conducting embedded AI research',
+      'Working on multimodal systems and AI applications'
+    ],
+    skills: [
+      'Machine Learning',
+      'Embedded AI',
+      'Multimodal Systems',
+      'Research & Development'
+    ]
+  },
+  {
     title: 'AI Research Assistant',
     company: 'Machine Learning Systems Research',
     location: 'United States',
-    duration: 'Jan 2026 - PRESENT',
+    duration: 'Jan 2026 - May 2026',
     description:
       'Working as an AI Research Assistant focused on machine learning systems for speech and biosignal understanding. This work involves designing model architectures, building training pipelines, and evaluating models in challenging sensing environments. Current research includes work on state-space models for speech enhancement and alignment research involving language model behavior.',
     achievements: [
@@ -212,37 +230,37 @@ export const experience: ExperienceItem[] = [
   }
 ];
 
-// Education Background (you'll need to update this with your actual education)
+// Education Background
 export const education = [
   {
-    degree: 'Bachelor of Science in Computer Science', // Update with your actual degree
-    school: 'Your University', // Update with your actual school
+    degree: 'Bachelor of Science in Computer Science',
+    school: 'Wentworth Institute of Technology',
     location: 'United States',
-    duration: '2022 - Present', // Update with your actual dates
-    gpa: 'TBD', // Update with your actual GPA if you want to include it
-    focus: 'Software Engineering & Data Science',
+    duration: '2023 - 2026',
+    gpa: '3.9+',
+    focus: 'Minors in Applied Mathematics and Data Science',
     achievements: [
-      'Active in software development projects',
-      'Focus on AI and machine learning applications',
-      'Contributing to open-source projects',
-      'Building practical solutions to real-world problems'
+      'Joined Upsilon Pi Epsilon (International Computing Honor Society)',
+      'Massachusetts Police Association Scholarship Recipient',
+      'Contributing to Wentworth PocketQube satellite mission embedded systems',
+      'CS & Mathematics Tutor at Success Studio'
     ]
   }
 ];
 
-// Awards & Recognition (update with your actual achievements)
+// Awards & Recognition
 export const awards = [
   {
-    title: 'GitHub Project Showcase',
-    organization: 'Personal Achievement',
-    year: '2024',
-    description: 'Developed multiple innovative projects including DataDriver, Market Sentiment Analysis, and IoT Wearables'
+    title: 'Upsilon Pi Epsilon',
+    organization: 'International Computing Honor Society',
+    year: '2026',
+    description: 'Elected to the international honor society recognizing academic achievement and contributions in computer science.'
   },
   {
-    title: 'SDE Internship',
-    organization: 'Capital Technology Group',
+    title: 'MPA Scholarship',
+    organization: 'Massachusetts Police Association',
     year: '2024',
-    description: 'Selected for competitive software development internship position'
+    description: 'Awarded the Massachusetts Police Association scholarship recognizing academic achievement and leadership.'
   }
 ];
 

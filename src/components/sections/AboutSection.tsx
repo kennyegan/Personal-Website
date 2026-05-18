@@ -19,36 +19,22 @@ export default function AboutSection() {
         <div className="rounded-[32px] border border-border/75 bg-surface/48 px-6 py-7 shadow-[0_26px_72px_rgba(2,8,23,0.2)] backdrop-blur-md sm:px-8">
           <div className="space-y-5 text-base leading-7 text-text-secondary">
             <p className="text-[1.05rem] leading-8 text-text-primary/92">
-              I&apos;m an AI researcher and engineer working across the full
-              stack of technical systems, from embedded hardware and space
-              systems to the internals of modern machine learning models.
+              I’m an AI researcher and engineer working across machine learning, embedded intelligence, and large-scale technical infrastructure.
             </p>
             <p>
-              I focus on building systems that are both rigorous and real,
-              combining production-grade engineering with experiments that
-              produce genuine insight rather than just impressive metrics.
+              My work spans the full stack of modern AI systems, from embedded and hardware-integrated environments to multimodal learning, model architecture, and production ML infrastructure. I focus on building systems that are technically rigorous while remaining practical and deployable in real-world environments.
             </p>
             <p>
-              I currently work as an{' '}
-              <span className="text-text-primary">AI Research Assistant</span>{' '}
-              developing machine learning systems for speech and biosignal
-              understanding. Previously, I worked as a{' '}
-              <span className="text-text-primary">
-                Software Engineering Intern (Machine Learning Focus)
-              </span>{' '}
-              at <span className="text-accent-cyan">Capital Technology Group</span>,
-              contributing to ML systems operating on large government and
-              financial datasets for anomaly detection, trade surveillance, and
-              predictive analytics.
+              I currently work as an <span className="text-text-primary">AI R&D Co-op</span> at <span className="text-accent-cyan">Amazon Lab126</span>, contributing to embedded AI and multimodal systems research focused on real-world intelligent systems and production-oriented AI technologies.
             </p>
             <p>
-              Outside of research, I build systems that connect theory with
-              deployment, including embedded platforms, data infrastructure, and
-              technical software.
+              Previously, I worked as a <span className="text-text-primary">Software Engineering Intern</span> with a machine learning focus at Capital Technology Group, contributing to ML systems operating on large government and financial datasets for anomaly detection, trade surveillance, predictive analytics, and data-driven risk modeling.
             </p>
             <p>
-              Some of the systems I&apos;m currently building can&apos;t be
-              public yet. When they are, they&apos;ll probably show up here.
+              Outside of formal research, I build independent technical systems spanning embedded platforms, scalable infrastructure, intelligent data pipelines, and applied AI products.
+            </p>
+            <p>
+              Some of the systems I’m currently developing are not public yet. When they are, they’ll appear here.
             </p>
           </div>
         </div>

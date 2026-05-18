@@ -35,15 +35,27 @@ export const currentFocus: CurrentFocus = {
   eyebrow: 'NOW',
   title: 'Current Focus',
   summary:
-    'Continuing my work as an AI Research Assistant while pursuing additional research and technical initiatives across machine learning, embedded systems, and data-driven infrastructure.',
+    'Conducting embedded AI and multimodal systems research through Amazon Lab126 while advancing independent technical initiatives across machine learning, intelligent systems, audio interfaces, and scalable data-driven infrastructure. Current work focuses on agentic voice technologies, adaptive human-device interaction, and next-generation AI systems designed for real-world deployment.',
   items: [
-    'Speech & alignment research',
-    'Ongoing technical research',
-    'Private ventures in progress',
+    'Embedded AI & Amazon Lab126 R&D',
+    'Multimodal systems and applied ML research',
+    'Private ventures and infrastructure development',
   ],
 };
 
 export const timelineItems: TimelineItem[] = [
+  {
+    id: '2026-amazon-lab126',
+    date: '2026',
+    order: 0,
+    category: 'Career',
+    title: 'AI R&D Co-op — Amazon Lab126',
+    description:
+      'Joined Amazon Lab126 to conduct embedded AI and multimodal systems research.',
+    details:
+      'Joined Amazon Lab126 as an AI R&D Co-op to conduct embedded AI and multimodal systems research. Specific details regarding projects and implementations will be updated upon completion of the co-op.',
+    pulseNode: true,
+  },
   {
     id: '2026-upe',
     date: '2026',
@@ -54,7 +66,6 @@ export const timelineItems: TimelineItem[] = [
       'Elected to the international honor society for the computing and information disciplines.',
     details:
       'Elected to Upsilon Pi Epsilon, the international honor society for the computing and information disciplines, recognizing academic achievement and contributions in computer science.',
-    pulseNode: true,
   },
   {
     id: '2026-ssm-lab126',
