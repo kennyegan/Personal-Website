@@ -95,18 +95,7 @@ function CurrentFocusCard() {
       <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.08),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_45%)]" />
 
       <div className="relative">
-        <div className="flex flex-wrap items-center gap-3">
-          <span
-            className={`${dmMono.className} inline-flex rounded-full border border-accent-sky/30 bg-accent-sky/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.28em] text-accent-sky`}
-          >
-            {currentFocus.eyebrow}
-          </span>
-          <span
-            className={`${dmMono.className} inline-flex rounded-full border border-accent-indigo/20 bg-accent-indigo/10 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.22em] text-accent-indigo`}
-          >
-            Current work
-          </span>
-        </div>
+
 
         <h3
           className={`${playfair.className} mt-4 text-[1.85rem] font-semibold tracking-[-0.045em] text-text-bright sm:text-[2.1rem]`}
