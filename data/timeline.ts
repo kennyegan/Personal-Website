@@ -51,7 +51,7 @@ export const timelineItems: TimelineItem[] = [
     category: 'Career',
     title: 'AI R&D — Amazon Lab126',
     description:
-      'Joined Amazon Lab126 to conduct embedded AI and multimodal systems research.',
+      'Working with Amazon Lab126 to conduct embedded AI and multimodal systems research.',
     link: {
       label: 'View Experience',
       href: '#experience-0',

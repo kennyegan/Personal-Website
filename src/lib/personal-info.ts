@@ -105,8 +105,7 @@ export interface ExperienceItem {
 export const experience: ExperienceItem[] = [
   {
     title: 'AI R&D',
-    company: 'Amazon Lab126',
-    companyDetail: 'Contract',
+    company: 'Amazon Lab126 (Contract)',
     location: 'United States',
     duration: 'May 2026 - Present',
     description:
