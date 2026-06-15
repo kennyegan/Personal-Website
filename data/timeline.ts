@@ -49,7 +49,7 @@ export const timelineItems: TimelineItem[] = [
     date: '2026',
     order: 0,
     category: 'Career',
-    title: 'AI R&D Co-op — Amazon Lab126',
+    title: 'AI R&D — Amazon Lab126',
     description:
       'Joined Amazon Lab126 to conduct embedded AI and multimodal systems research.',
     link: {
@@ -66,15 +66,6 @@ export const timelineItems: TimelineItem[] = [
     title: 'Joined Upsilon Pi Epsilon (International Computing Honor Society)',
     description:
       'Elected to the international honor society for the computing and information disciplines.',
-    },
-  {
-    id: '2026-ssm-lab126',
-    date: '2026',
-    order: 2,
-    category: 'Research',
-    title: 'SSM Speech Enhancement Research Presented to Amazon Lab126',
-    description:
-      'Presented architecture design, training setup, and early evaluation results for state-space-model speech enhancement research.',
     },
   {
     id: '2026-pocketqube-mission-work',
@@ -134,9 +125,9 @@ export const timelineItems: TimelineItem[] = [
     date: '2025',
     order: 4,
     category: 'Stealth',
-    title: 'Large-Scale Financial Infrastructure System (Stealth)',
+    title: 'Started Stealth Venture',
     description:
-      'Initiated development of a private technical system focused on financial infrastructure and data systems.',
+      'Started a stealth venture currently under private development.',
     },
   {
     id: '2024-wentworth-pocketqube',

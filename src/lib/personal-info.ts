@@ -9,7 +9,7 @@ export const personalInfo = {
   // Basic Information
   name: "Kenneth Egan",
   title: "AI Researcher & Engineer",
-  bio: "AI R&D Co-op at Amazon Lab126, working across machine learning, embedded intelligence, and large-scale technical infrastructure.",
+  bio: "AI R&D at Amazon Lab126, working across machine learning, embedded intelligence, and large-scale technical infrastructure.",
   location: "United States",
   siteUrl,
   
@@ -104,13 +104,13 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
-    title: 'AI R&D Co-op',
+    title: 'AI R&D',
     company: 'Amazon Lab126',
     companyDetail: 'Contract',
     location: 'United States',
     duration: 'May 2026 - Present',
     description:
-      'Working as an AI R&D Co-op at Amazon Lab126, focusing on embedded AI and multimodal systems research. Specific project details are currently under development and will be updated upon completion.',
+      'Working in AI R&D at Amazon Lab126, focusing on embedded AI and multimodal systems research. Specific project details are currently under development and will be updated upon completion.',
     achievements: [
       'Conducting embedded AI research',
       'Working on multimodal systems and AI applications'
