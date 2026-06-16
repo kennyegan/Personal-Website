@@ -35,7 +35,7 @@ export const currentFocus: CurrentFocus = {
   eyebrow: 'NOW',
   title: 'Current Focus',
   summary:
-    'Conducting embedded AI and multimodal systems research through Amazon Lab126 while advancing independent technical initiatives across machine learning, intelligent systems, audio interfaces, and scalable data-driven infrastructure. Current work focuses on agentic voice technologies, adaptive human-device interaction, and next-generation AI systems designed for real-world deployment.',
+    'Conducting embedded AI and multimodal systems research through Amazon Lab126 while advancing independent technical initiatives across machine learning, intelligent systems, audio interfaces, and scalable data-driven infrastructure.',
   items: [
     'Embedded AI & Amazon Lab126 R&D',
     'Multimodal systems and applied ML research',
